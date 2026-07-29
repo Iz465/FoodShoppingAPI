@@ -1,16 +1,39 @@
 @FoodShoppingAPI_HostAddress = http://localhost:5267
 
 ###
-GET {{FoodShoppingAPI_HostAddress}}/api/foods
+GET {{FoodShoppingAPI_HostAddress}}/api/foods?category=Drink&price=8.99
 
 ### 
-GET {{FoodShoppingAPI_HostAddress}}/api/foods/2
+GET {{FoodShoppingAPI_HostAddress}}/api/foods/54
 
 ###
-PUT {{FoodShoppingAPI_HostAddress}}/api/foods/2
+PUT {{FoodShoppingAPI_HostAddress}}/api/foods/43
+Content-Type: application/json
+{
+  "id": 43,
+  "name": "Mars Bar",
+  "price": 1.0,
+  "quantity": 54,
+  "category": "Chocolate",
+  "description": "A chewy chocolate bar"
+}
 
 ###
 POST {{FoodShoppingAPI_HostAddress}}/api/foods
+Content-Type: application/json
+
+{
+  "id": 32,
+  "name": "Strawberry Milk",
+  "price": 8.99,
+  "quantity": 25,
+  "category": "Drink",
+  "description": "Strawberry flavored milk"
+}
 
 ### 
-DELETE {{FoodShoppingAPI_HostAddress}}/api/foods/{1}
+DELETE {{FoodShoppingAPI_HostAddress}}/api/foods/54
+
+
+
+    

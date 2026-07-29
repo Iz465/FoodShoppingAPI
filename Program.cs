@@ -1,8 +1,16 @@
+using FoodShoppingAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddDbContext<FoodDbContext> // choosing FoodDbContext as the database context to start a session between the server and the database
+    (options => options.UseSqlite("Data Source=foodshopping.db")); // Saying that database the databse should be created and make the  foodshopping.db file the database itself.
+                                                                   // It will create that file if it doesnt exist. sqlite is a file based database.
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 

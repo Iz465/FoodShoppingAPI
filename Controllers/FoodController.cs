@@ -1,86 +1,115 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using FoodShoppingAPI.Models;
+using FoodShoppingAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
+
+
 
 namespace FoodShoppingAPI.Controllers
 {
-   
-
-    public class Food
-    {
-        public int id { get; set; } // makes it public if not specified
-        public string name { get; set; } = "";
-        public float price { get; set; }
-        public int quantity { get; set; }
-        public string category { get; set; } = "";
-        public string description { get; set; } = "";
-        public string expirationDate { get; set; } = "";
-    };
 
 
     [ApiController]
     [Route("api/foods")]
     public class FoodController : ControllerBase
     {
-        static List<Food> Foods = new List<Food> {
-            new Food
-            {
-                id = 1,
-                name = "Apple",
-                price = 0.5f,
-                quantity = 100,
-                category = "Fruit",
-                description = "A sweet red fruit",
-                expirationDate = "2026-08-10"
-            },
-            new Food
-            {
-                id = 2,
-                name = "Muffin",
-                price = 2.0f,
-                quantity = 20,
-                category = "Bread",
-                description = "A soft baked good",
-                expirationDate = "2026-08-05"
-            },
-            new Food
-            {
-                id = 3,
-                name = "Milk",
-                price = 2.0f,
-                quantity = 20,
-                category = "Drink",
-                description = "A nutritious drink",
-                expirationDate = "2026-08-07"
-            }
-        };
+        private readonly FoodDbContext _context;
 
+        public FoodController(FoodDbContext context)
+        {
+            _context = context;
+        }
+
+     
         [HttpGet]
-        public List<Food> GetFoods() { return Foods; }
+        public async Task<List<Food>> GetFoods(string? category, string? name, float? price)
+        {
+            // use this over null check because it checks for null, empty, or whitespace strings.
+            if (string.IsNullOrWhiteSpace(category) && string.IsNullOrWhiteSpace(name) && price == null) 
+                return await _context.Foods.ToListAsync();
+
+            var query = _context.Foods.AsQueryable(); // IQueryable<Food> this is its type. using var though as you can figure that out with the asqueryable() method.
+
+
+            if (!string.IsNullOrWhiteSpace(category))
+                query = query.Where(food => food.Category == category);
+
+            if (!string.IsNullOrWhiteSpace(name))
+                query = query.Where(food => food.Name == name);
+
+            if (price != null)
+                query = query.Where(food => food.Price == price);
+
+            return await query.ToListAsync();
+        }
 
         [HttpGet("{id}")]
-        public Food GetSpecificFood(int id) { return Foods[id - 1]; }
+        public async Task<ActionResult<Food>> GetSpecificFood(int id) 
+        {
+            Food? food = await _context.Foods.FindAsync(id);
+
+            if (food == null)
+                return NotFound();
+
+            return Ok(food);
+        }
 
 
         [HttpPut("{id}")]
 
-        public void UpdateFood(int id)
+        public async Task<ActionResult> UpdateFood(int id, Food updatedFood)
         {
-            for (int i = 0; i < Foods.Count(); i++)
-            {
-                if (i == id -1)
-                {
-                    Foods[i].name = "Tomato";
-                    Foods[i].price = 1.0f;
-                    Foods[i].quantity = 54;
-                    Foods[i].category = "Vegetable";
-                    Foods[i].description = "A red vegetable";
-                    Foods[i].expirationDate = "2026-08-15";
-                }
-            }
-        }
-        
+            if (id != updatedFood.Id)
+                return BadRequest();
 
-          
+            Food? food = await _context.Foods.FindAsync(id);
+            if (food == null)
+                return NotFound();
+            
+            food.Name = updatedFood.Name;
+            food.Price = updatedFood.Price;
+            food.Quantity = updatedFood.Quantity;
+            food.Category = updatedFood.Category;
+            food.Description = updatedFood.Description;
+
+            await _context.SaveChangesAsync();
+            return Ok(food);
+                
+        }
+
+
+        [HttpPost]
+
+        public async Task<ActionResult<Food>> AddFood(Food newFood)
+        {
+         // no need to check id - database makes one every time data is added to the table
+            _context.Foods.Add(newFood); 
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetSpecificFood), new { id = newFood.Id }, newFood);
+        }
+
+
+        [HttpDelete("{id}")]
+
+        public async Task<ActionResult> DeleteFood(int id)
+        {
+           
+            Food? food = await _context.Foods.FindAsync(id);
+            if (food == null)
+                return NotFound();
+
+            _context.Foods.Remove(food);
+            await _context.SaveChangesAsync();
+            return NoContent();
+            
+             
+           
+
+        }
+
+
     }
 
  
