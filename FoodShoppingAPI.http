@@ -1,7 +1,7 @@
 @FoodShoppingAPI_HostAddress = http://localhost:5267
 
 ###
-GET {{FoodShoppingAPI_HostAddress}}/api/foods?category=Drink&price=8.99
+GET {{FoodShoppingAPI_HostAddress}}/api/foods
 
 ### 
 GET {{FoodShoppingAPI_HostAddress}}/api/foods/54
@@ -12,7 +12,7 @@ Content-Type: application/json
 {
   "id": 43,
   "name": "Mars Bar",
-  "price": 1.0,
+  "price": 2.0,
   "quantity": 54,
   "category": "Chocolate",
   "description": "A chewy chocolate bar"
@@ -23,7 +23,7 @@ POST {{FoodShoppingAPI_HostAddress}}/api/foods
 Content-Type: application/json
 
 {
-  "id": 32,
+  "id": 43,
   "name": "Strawberry Milk",
   "price": 8.99,
   "quantity": 25,

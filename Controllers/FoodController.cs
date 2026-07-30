@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using FoodShoppingAPI.Models;
 using FoodShoppingAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 
 
@@ -24,12 +25,10 @@ namespace FoodShoppingAPI.Controllers
 
      
         [HttpGet]
-        public async Task<List<Food>> GetFoods(string? category, string? name, float? price)
+        public async Task<List<Food>> GetFoods(string? category, string? name, float? price, // price should be decimal not float because float can round stuff up
+             string? sortBy, bool descending, string? search)
         {
-            // use this over null check because it checks for null, empty, or whitespace strings.
-            if (string.IsNullOrWhiteSpace(category) && string.IsNullOrWhiteSpace(name) && price == null) 
-                return await _context.Foods.ToListAsync();
-
+  
             var query = _context.Foods.AsQueryable(); // IQueryable<Food> this is its type. using var though as you can figure that out with the asqueryable() method.
 
 
@@ -40,10 +39,41 @@ namespace FoodShoppingAPI.Controllers
                 query = query.Where(food => food.Name == name);
 
             if (price != null)
-                query = query.Where(food => food.Price == price);
+                query = query.Where(food => food.Price <= price);
+
+            if (!string.IsNullOrWhiteSpace(search))
+                query = query.Where(food => food.Name.Contains(search));
+
+            if (!string.IsNullOrWhiteSpace(sortBy))
+            {
+                if (descending)
+                {
+                    switch (sortBy)
+                    {
+                        case "name": query = query.OrderByDescending(food => food.Name); break;
+                        case "category": query = query.OrderByDescending(food => food.Category); break;
+                        case "price": query = query.OrderByDescending(food => food.Price); break;
+                    }
+
+                   
+                }
+
+                else
+                {
+                    switch (sortBy)
+                    {
+                        case "name": query = query.OrderBy(food => food.Name); break;
+                        case "category": query = query.OrderBy(food => food.Category); break;
+                        case "price": query = query.OrderBy(food => food.Price); break;
+                    }
+                }                                    
+            }
 
             return await query.ToListAsync();
         }
+
+
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Food>> GetSpecificFood(int id) 
