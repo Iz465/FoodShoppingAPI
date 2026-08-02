@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodShoppingAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace FoodShoppingAPI.Models
+namespace FoodShoppingAPI.Dtos.Food
 {
-    public class Food
+    public class UpdateFoodDto
     {
-        public int Id { get; set; } // makes it public if not specified
-
-        [Required] [StringLength(100)]
+       
+        [Required]
+        [StringLength(100)]
         public string Name { get; set; } = string.Empty;
 
         [Range(.1, 1000)]
@@ -19,10 +20,7 @@ namespace FoodShoppingAPI.Models
         public int CategoryId { get; set; } 
 
         [Required]
-        public Category Category { get; set; } = new();
-
-        [Required] [StringLength(100)]
+        [StringLength(100)]
         public string Description { get; set; } = string.Empty;
-    };
-
+    }
 }

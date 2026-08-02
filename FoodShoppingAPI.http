@@ -1,21 +1,20 @@
 @FoodShoppingAPI_HostAddress = http://localhost:5267
 
 ###
-GET {{FoodShoppingAPI_HostAddress}}/api/foods
+GET {{FoodShoppingAPI_HostAddress}}/api/foods?
 
 ### 
-GET {{FoodShoppingAPI_HostAddress}}/api/foods/54
+GET {{FoodShoppingAPI_HostAddress}}/api/foods/43
 
 ###
-PUT {{FoodShoppingAPI_HostAddress}}/api/foods/43
+PUT {{FoodShoppingAPI_HostAddress}}/api/foods/1
 Content-Type: application/json
 {
-  "id": 43,
-  "name": "Mars Bar",
-  "price": 2.0,
-  "quantity": 54,
-  "category": "Chocolate",
-  "description": "A chewy chocolate bar"
+  "name": "Bacon Pie",
+  "price": 5,
+  "quantity": 12,
+  "categoryId": 1,
+  "description": "Pie with bacon strips"
 }
 
 ###
@@ -23,16 +22,15 @@ POST {{FoodShoppingAPI_HostAddress}}/api/foods
 Content-Type: application/json
 
 {
-  "id": 43,
-  "name": "Strawberry Milk",
-  "price": 8.99,
-  "quantity": 25,
-  "category": "Drink",
-  "description": "Strawberry flavored milk"
+  "name": "Yoghurt",
+  "price": 2.3,
+  "quantity": 90,
+  "categoryId": 1,
+  "description": "A dairy product"
 }
 
 ### 
-DELETE {{FoodShoppingAPI_HostAddress}}/api/foods/54
+DELETE {{FoodShoppingAPI_HostAddress}}/api/foods/5
 
 
 
