@@ -1,0 +1,29 @@
+@FoodShoppingAPI_HostAddress = http://localhost:5267
+
+###
+GET {{FoodShoppingAPI_HostAddress}}/api/category
+
+###
+GET {{FoodShoppingAPI_HostAddress}}/api/category/15
+
+###
+PUT {{FoodShoppingAPI_HostAddress}}/api/category/13
+Content-Type: application/json
+{
+  "name": "Drink",
+  "imageUrl": "dhaodha44"
+}
+
+###
+POST {{FoodShoppingAPI_HostAddress}}/api/category
+Content-Type: application/json
+{
+  "name": "Bread",
+  "imageUrl": "34zao4le"
+}
+
+###
+DELETE {{FoodShoppingAPI_HostAddress}}/api/category/14
+
+
+

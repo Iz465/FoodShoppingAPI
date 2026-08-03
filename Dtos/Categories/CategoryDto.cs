@@ -1,6 +1,15 @@
-﻿namespace FoodShoppingAPI.Dtos.Categories
+﻿using FoodShoppingAPI.Models;
+
+
+namespace FoodShoppingAPI.Dtos.Categories
 {
     public class CategoryDto
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public string ImageUrl { get; set; } = string.Empty;
+
     }
 }

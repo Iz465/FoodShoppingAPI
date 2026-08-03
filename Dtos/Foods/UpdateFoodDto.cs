@@ -1,11 +1,13 @@
 ﻿using FoodShoppingAPI.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace FoodShoppingAPI.Dtos.Food
+namespace FoodShoppingAPI.Dtos.Foods
 {
-    public class CreateFoodDto
+    public class UpdateFoodDto
     {
-        [Required][StringLength(100)]
+       
+        [Required]
+        [StringLength(100)]
         public string Name { get; set; } = string.Empty;
 
         [Range(.1, 1000)]
@@ -15,7 +17,7 @@ namespace FoodShoppingAPI.Dtos.Food
         public int Quantity { get; set; }
 
         [Required]
-        public int CategoryId { get; set; } = new();
+        public int CategoryId { get; set; } 
 
         [Required]
         [StringLength(100)]

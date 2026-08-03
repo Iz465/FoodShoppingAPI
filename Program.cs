@@ -1,4 +1,6 @@
 using FoodShoppingAPI.Data;
+using FoodShoppingAPI.Interfaces;
+using FoodShoppingAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IFoodInterface, FoodService>();
+builder.Services.AddScoped<ICategoryInterface, CategoryService>();
 
 builder.Services.AddDbContext<FoodDbContext> // choosing FoodDbContext as the database context to start a session between the server and the database
     (options => options.UseSqlite("Data Source=foodshopping.db")); // Saying that database the databse should be created and make the  foodshopping.db file the database itself.

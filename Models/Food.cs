@@ -19,7 +19,7 @@ namespace FoodShoppingAPI.Models
         public int CategoryId { get; set; } 
 
         [Required]
-        public Category Category { get; set; } = new();
+        public Category Category { get; set; } = null!;
 
         [Required] [StringLength(100)]
         public string Description { get; set; } = string.Empty;
