@@ -1,8 +1,8 @@
 @FoodShoppingAPI_HostAddress = http://localhost:5267
 
 ###
-GET {{FoodShoppingAPI_HostAddress}}/api/foods?category=Fruit
-
+GET {{FoodShoppingAPI_HostAddress}}/api/foods
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjE4IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImJvYmJ5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3ODU5OTU3Mjh9.4rElNLZ507OJHzS97pnCKdk0QkXoGtKS7iUlSeK4A4E
 ### 
 GET {{FoodShoppingAPI_HostAddress}}/api/foods/13
 

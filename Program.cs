@@ -1,7 +1,12 @@
 using FoodShoppingAPI.Data;
 using FoodShoppingAPI.Interfaces;
+using FoodShoppingAPI.Models;
 using FoodShoppingAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +15,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IFoodInterface, FoodService>();
 builder.Services.AddScoped<ICategoryInterface, CategoryService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-builder.Services.AddDbContext<FoodDbContext> // choosing FoodDbContext as the database context to start a session between the server and the database
-    (options => options.UseSqlite("Data Source=foodshopping.db")); // Saying that database the databse should be created and make the  foodshopping.db file the database itself.
-                                                                   // It will create that file if it doesnt exist. sqlite is a file based database.
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options => // configuring the jwt options for what inside of the token needs to be validated.
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true, // this makes it so the server checks the jwt signature is valid.
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes("Thesecretkey=2332512fdsfggh0reg23423423232234235235234343434") // the secret key to check the signature
+            ),
+            ValidateLifetime = true, // checks the jwt token hasn't expired.
+            ValidateAudience = false,
+            ValidateIssuer = false // both this ValidateIssuer & ValidateAudience need to be set to false here or it gives errors.
+        };
+    });
+
+
+builder.Services.AddDbContext<FoodDbContext> 
+    (options => options.UseSqlite("Data Source=foodshopping.db")); 
+           
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

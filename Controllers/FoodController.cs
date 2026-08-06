@@ -7,6 +7,7 @@ using System.Collections.Immutable;
 using FoodShoppingAPI.Dtos.Foods;
 using FoodShoppingAPI.Services;
 using FoodShoppingAPI.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 
 
@@ -18,15 +19,17 @@ namespace FoodShoppingAPI.Controllers
     [Route("api/foods")]
     public class FoodController : ControllerBase
     {
-       
+
         private readonly IFoodInterface _foodService;
         public FoodController(IFoodInterface foodService)
         {
             _foodService = foodService;
         }
 
-     
+
+        [Authorize(Roles = "Admin")]
         [HttpGet]
+        
         public async Task<List<FoodDto>> GetFoods(string? category, string? name, float? price, // price should be decimal not float because float can round stuff up
              string? sortBy, bool descending, string? search, int? page, int? pageSize)
         {
