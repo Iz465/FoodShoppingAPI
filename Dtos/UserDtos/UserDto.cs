@@ -7,7 +7,7 @@ namespace FoodShoppingAPI.Dtos.UserDtos
     {
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
-        public string UserRoleEnum { get; set; } = string.Empty;
+        public string UserRole { get; set; } = string.Empty;
 
     }
 }

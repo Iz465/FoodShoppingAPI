@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FoodShoppingAPI.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace FoodShoppingAPI.Models
 {
-    public enum Role
-    {
-        User,
-        Admin,
-        None
-    }
+ 
     public class User
     {
         public int Id { get; set; }
@@ -19,6 +15,6 @@ namespace FoodShoppingAPI.Models
         public string PasswordHash { get; set; } = string.Empty;
 
         [Required]
-        public Role RoleEnum { get; set; }
+        public ERole RoleEnum { get; set; }
     }
 }

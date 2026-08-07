@@ -2,25 +2,26 @@
 
 ###
 GET {{FoodShoppingAPI_HostAddress}}/api/foods
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjE4IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImJvYmJ5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3ODU5OTU3Mjh9.4rElNLZ507OJHzS97pnCKdk0QkXoGtKS7iUlSeK4A4E
+
 ### 
-GET {{FoodShoppingAPI_HostAddress}}/api/foods/13
+GET {{FoodShoppingAPI_HostAddress}}/api/foods/14
 
 ###
-PUT {{FoodShoppingAPI_HostAddress}}/api/foods/13
+PUT {{FoodShoppingAPI_HostAddress}}/api/foods/14
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6Ilphcm9zcyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzg2MDcwMjUyfQ.hNB7Ufb6CX3Xj89yNjF9DUy2g_SIfT0nqg1Rwmk6liA
 Content-Type: application/json
 {
-  "name": "Bacon Pie",
+  "name": "Blue Cheese",
   "price": 5,
   "quantity": 12,
   "categoryId": 13,
-  "description": "Pie with bacon strips"
+  "description": "Blue coloured cheese that smells"
 }
 
 ###
 POST {{FoodShoppingAPI_HostAddress}}/api/foods
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6Ilphcm9zcyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzg2MDcwMjUyfQ.hNB7Ufb6CX3Xj89yNjF9DUy2g_SIfT0nqg1Rwmk6liA
 Content-Type: application/json
-
 {
   "name": "Yoghurt",
   "price": 2.3,
@@ -30,8 +31,6 @@ Content-Type: application/json
 }
 
 ### 
-DELETE {{FoodShoppingAPI_HostAddress}}/api/foods/12
-
-
-
+DELETE {{FoodShoppingAPI_HostAddress}}/api/foods/16
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI2IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6Ilphcm9zcyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzg2MDcwMjUyfQ.hNB7Ufb6CX3Xj89yNjF9DUy2g_SIfT0nqg1Rwmk6liA
     

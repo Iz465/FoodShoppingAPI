@@ -15,7 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IFoodInterface, FoodService>();
 builder.Services.AddScoped<ICategoryInterface, CategoryService>();
+builder.Services.AddScoped<IUser, UserServices>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

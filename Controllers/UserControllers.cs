@@ -9,6 +9,9 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using FoodShoppingAPI.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using FoodShoppingAPI.Enums;
 
 namespace FoodShoppingAPI.Controllers
 {
@@ -16,40 +19,40 @@ namespace FoodShoppingAPI.Controllers
     [Route("api/users")]
     public class UserControllers : ControllerBase
     {
-        private readonly FoodDbContext _context;
-        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserControllers(FoodDbContext context, IPasswordHasher<User> passwordHasher)
+        private readonly IUser _userService;
+    
+        public UserControllers(IUser userService)
         {
-            _context = context;
-            _passwordHasher = passwordHasher;
+            _userService = userService;
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet] 
+        public async Task<ActionResult<List<UserDto>>> GetUsers()
+        {
+            List<UserDto> users = new();
+            return Ok(users = await _userService.GetUsers());
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDto>> GetSpecificUser(int id)
+        {
+            UserDto user = await _userService.GetSpecificUser(id);
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto dto)
         {
-            bool userExists = await _context.Users.AnyAsync(user => user.Username == dto.Username);
+            UserDto userDto = await _userService.CreateUser(dto);
 
-            if (userExists)
+            if (userDto == null)
                 return Conflict();
-
-            var user = new User
-            {
-                Username = dto.Username,
-                RoleEnum = dto.UserRoleEnum
-            };
-
-            user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
-               
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            UserDto userDto = new UserDto
-            {
-                Id = user.Id,
-                Username = user.Username,
-                UserRoleEnum = user.RoleEnum.ToString()
-            };
 
             return Ok(userDto);
         }
@@ -57,68 +60,63 @@ namespace FoodShoppingAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> LoginToUser(LoginUserDto dto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(user => user.Username == dto.Username);
-            if (user == null)
-                return Unauthorized("Invalid username or password");
+            string jwtToken = await _userService.LoginUser(dto);
 
-            var passwordMatches = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (jwtToken == null)
+                return Unauthorized("Invalid Username or Password");
 
-            if (passwordMatches == PasswordVerificationResult.Failed)
-                return Unauthorized("Invalid username or password");
-
-            UserDto userDto = new UserDto
-            {
-                Id = user.Id,
-                Username = user.Username,
-                UserRoleEnum = user.RoleEnum.ToString()
-            };
-
-
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.RoleEnum.ToString())
-            };
-
-            string secretKey = "Thesecretkey=2332512fdsfggh0reg23423423232234235235234343434";
-            byte[] secretKeyByte = Encoding.UTF8.GetBytes(secretKey);
-
-            var securityKey = new SymmetricSecurityKey(secretKeyByte);
-
-            var credentials = new SigningCredentials
-                (
-                securityKey,
-                SecurityAlgorithms.HmacSha256
-                );
-
-            var token = new JwtSecurityToken
-            (
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
-                signingCredentials: credentials
-            );
-
-            string jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            
-
-            return Ok(jwt);
+            return Ok(jwtToken);
 
         }
 
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateUser(int id, UpdateUserDto dto)
+        {
+
+            string? currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentUserId != id.ToString())
+                return StatusCode(StatusCodes.Status403Forbidden,"Can only edit your own profile");
+
+            EAuthentication authentication = await _userService.UpdateUser(id, dto);
+
+            switch (authentication)
+            {
+                case EAuthentication.UserNotFound: return NotFound("User not found");
+                case EAuthentication.PasswordNotFound: return BadRequest("Password incorrect");
+                case EAuthentication.PasswordNotMatching: return BadRequest("New passwords not matching");
+                case EAuthentication.Success: return NoContent();
+                default: return NoContent(); 
+            }
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("role/{id}")]
+        public async Task<ActionResult<EAuthentication>> UpdateUserRole(int id, UpdateUserRoleDto dto)
+        {
+            EAuthentication authentication = await _userService.UpdateUserRole(id, dto);
+
+            switch (authentication)
+            {
+                case EAuthentication.UserNotFound: return NotFound("User not found");
+                default: return NoContent();
+            }
+
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            User? user = await _context.Users.FindAsync(id);
-            if (user == null)
+
+            var foundUser = await _userService.DeleteUser(id);
+
+            if (foundUser == EAuthentication.UserNotFound)
                 return NotFound();
 
-            _context.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-            
+            return NoContent(); 
         }
 
     }

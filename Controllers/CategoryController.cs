@@ -1,10 +1,11 @@
 ﻿using FoodShoppingAPI.Data;
-using FoodShoppingAPI.Models;
 using FoodShoppingAPI.Dtos.Categories;
+using FoodShoppingAPI.Interfaces;
+using FoodShoppingAPI.Models;
+using FoodShoppingAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FoodShoppingAPI.Services;
-using FoodShoppingAPI.Interfaces;
 
 namespace FoodShoppingAPI.Controllers
 {
@@ -35,6 +36,7 @@ namespace FoodShoppingAPI.Controllers
             return Ok(dto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, UpdateCategoryDto dto)
         {
@@ -47,6 +49,7 @@ namespace FoodShoppingAPI.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
 
         public async Task<ActionResult> CreateCategory(CreateCategoryDto dto)
@@ -57,6 +60,7 @@ namespace FoodShoppingAPI.Controllers
                 new { id = categoryDto.Id }, categoryDto);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {

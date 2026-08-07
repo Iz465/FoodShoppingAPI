@@ -1,25 +1,49 @@
 @FoodShoppingAPI_HostAddress = http://localhost:5267
 
+###
+GET {{FoodShoppingAPI_HostAddress}}/api/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI1IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlNlcmVuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3ODYwNjk4Mjh9.UHdjYkxGmIyW1bI0NMA1R1fJ9SgKWWtY093FGFva3sk
+
+###
+GET {{FoodShoppingAPI_HostAddress}}/api/users/26
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI1IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlNlcmVuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3ODYwNjk4Mjh9.UHdjYkxGmIyW1bI0NMA1R1fJ9SgKWWtY093FGFva3sk
+###
+PUT {{FoodShoppingAPI_HostAddress}}/api/users/28
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI1IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlNlcmVuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3ODYwNjk4Mjh9.UHdjYkxGmIyW1bI0NMA1R1fJ9SgKWWtY093FGFva3sk
+Content-Type: application/json
+{
+  "username": "Zaross",
+  "oldPassword": "empty",
+  "newPassword": "ham100",
+  "newPasswordAgain": "ham100"
+}
+
+###
+PUT {{FoodShoppingAPI_HostAddress}}/api/users/role/26
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI1IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlNlcmVuIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3ODYwNjk4Mjh9.UHdjYkxGmIyW1bI0NMA1R1fJ9SgKWWtY093FGFva3sk
+Content-Type: application/json
+{
+  "role": 2
+}
 
 ###
 POST {{FoodShoppingAPI_HostAddress}}/api/users/register
 Content-Type: application/json
 {
-  "username": "bobby",
-  "password": "password912",
-  "userRoleEnum": 1
+  "username": "Seren",
+  "password": "mourner"
 }
 
-###
+### 
 POST {{FoodShoppingAPI_HostAddress}}/api/users/login
 Content-Type: application/json
 {
-  "username": "bobby",
-  "password": "password912"
+  "username": "Zaross",
+  "password": "ham100"
 }
 
 ###
-DELETE {{FoodShoppingAPI_HostAddress}}/api/users/17
-
+DELETE {{FoodShoppingAPI_HostAddress}}/api/users/25
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IlZlcmFjIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3ODYwNjkwMjV9.OwNIO_IOj6jaKcU9PZrcqEWUSpuAoLHouyyOpodUoz8
 
 

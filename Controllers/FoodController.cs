@@ -27,7 +27,6 @@ namespace FoodShoppingAPI.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         
         public async Task<List<FoodDto>> GetFoods(string? category, string? name, float? price, // price should be decimal not float because float can round stuff up
@@ -51,7 +50,7 @@ namespace FoodShoppingAPI.Controllers
             return Ok(dto);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
 
         public async Task<ActionResult> UpdateFood(int id, UpdateFoodDto dto)
@@ -65,7 +64,7 @@ namespace FoodShoppingAPI.Controllers
 
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
 
         public async Task<ActionResult<FoodDto>> CreateFood(CreateFoodDto dto)
@@ -80,6 +79,7 @@ namespace FoodShoppingAPI.Controllers
         }
 
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteFood(int id)
         {
