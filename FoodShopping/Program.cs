@@ -18,6 +18,7 @@ builder.Services.AddScoped<ICategoryInterface, CategoryService>();
 builder.Services.AddScoped<IUser, UserServices>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
+var secretKey = builder.Configuration["JWT:SecretKey"];
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -28,7 +29,9 @@ builder.Services
             ValidateIssuerSigningKey = true, // this makes it so the server checks the jwt signature is valid.
 
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("Thesecretkey=2332512fdsfggh0reg23423423232234235235234343434") // the secret key to check the signature
+                Encoding.UTF8.GetBytes(secretKey ??            // the secret key to check the signature
+                throw new InvalidOperationException("JWT secret key is missing."))
+        
             ),
             ValidateLifetime = true, // checks the jwt token hasn't expired.
             ValidateAudience = false,
@@ -44,6 +47,16 @@ builder.Services.AddDbContext<FoodDbContext>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors(options => // allows back end and frontend to be on different ports.
+{
+    options.AddPolicy("AllowReactFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build(); // builds the application to be used after builder has configured it
 
 // Configure the HTTP request pipeline.
@@ -54,6 +67,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection(); // makes it so https is always used instead of http
 
+app.UseCors("AllowReactFrontend"); // allows the react frontend to interact with the backend.
+app.UseAuthentication();
 app.UseAuthorization(); // checks user to make it stable.
 
 app.MapControllers(); // tells the application which controller handles each request

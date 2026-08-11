@@ -1,3 +1,3 @@
 <Solution>
-  <Project Path="FoodShoppingAPI.csproj" />
+  <Project Path="FoodShopping/FoodShoppingAPI_BackEnd.csproj" />
 </Solution>

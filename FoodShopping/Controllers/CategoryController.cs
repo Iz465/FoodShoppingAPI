@@ -41,7 +41,7 @@ namespace FoodShoppingAPI.Controllers
         public async Task<ActionResult> UpdateCategory(int id, UpdateCategoryDto dto)
         {
             bool foundCategory = await _categoryService.UpdateCategory(id, dto);
-
+       
             if (!foundCategory)
                 return NotFound();
 
