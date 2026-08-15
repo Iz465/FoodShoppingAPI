@@ -1,7 +1,11 @@
-﻿namespace FoodShoppingAPI
+﻿using SQLitePCL;
+
+namespace FoodShoppingAPI
 {
     public class Brainstorming
     {
+       // front end goals
+       // make an admin page to show other pages admins have access to such as editing the different tables.
     }
 
     // what to test. 

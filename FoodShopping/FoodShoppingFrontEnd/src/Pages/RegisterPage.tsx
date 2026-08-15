@@ -1,9 +1,11 @@
+import CreateAccount from "../Services/RegisterService"
+
 function RegisterPage() {
     return (
         <div>
             <h1>Register Page</h1>
             <p></p>
-            <button>Create Your Account!</button>
+            <button onClick={CreateAccount}>Create Your Account!</button>
         </div>
 
     )

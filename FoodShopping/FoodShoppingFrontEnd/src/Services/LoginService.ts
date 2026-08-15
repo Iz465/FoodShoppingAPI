@@ -1,3 +1,5 @@
+
+
 async function login()
 {
     const response = await fetch('http://localhost:5267/api/users/login',
@@ -8,14 +10,17 @@ async function login()
             },
             body: JSON.stringify(
                 {
-                    'username': "Vanescula", // working username is Vanescula
+                    'username': "Vanescula", // working username is Vanescula // also an admin 
                     'password': "fangs" // working password is fangs
                 })
         })
 
-    const data = await response.json()
+    const data = await response.text()
 
-    console.log(data)
+
+   // console.log(data)
+
+    return data
 
 }
 

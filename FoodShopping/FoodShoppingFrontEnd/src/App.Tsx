@@ -1,26 +1,21 @@
-import type { Food } from './TypeScripts/Food.ts'
-import type { Category } from './TypeScripts/Category.ts'
+//import type { Food } from './TypeScripts/Food.ts'
+//import type { Category } from './TypeScripts/Category.ts'
 import LoginPage from './Pages/LoginPage.tsx'
 import { useState } from 'react'
 import { Route, Routes, Link } from 'react-router-dom'
 import CategoryPage from './Pages/CategoryPage.tsx'
 import RegisterPage from './Pages/RegisterPage.tsx'
+import AdminPage from './Pages/AdminPage.tsx'
+import UserPage from './Pages/UserPage.tsx'
+import FoodPage from './Pages/FoodPage.tsx'
 
 function App()
 {
-    const [categories, setCategories] = useState<Category[]>([])
+  //  const [categories, setCategories] = useState<Category[]>([])
     const [jwtToken, setToken] = useState<string>("")
 
-    async function getCategories() {
-        const response = await fetch('http://localhost:5267/api/category')
+    console.log("1. App RETURNED:", jwtToken);
 
-        const data = await response.json()
-        setCategories(data)
-
-        console.log(data)
-    }
-
-  
     return (
       
         < div >
@@ -40,12 +35,19 @@ function App()
                     <Link to="/Register">Create an Account</Link>
             
 
-                    <Link to="/login">Log in to Your Account</Link>
+                        <Link to="/login">Log in to Your Account</Link>
+                        <p></p>
+                        <Link to="/Admin">Admin</Link>
                  </div>
                     }/>
                 <Route path="/Categories" element={<CategoryPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/Register" element={<RegisterPage/> }/>
+                <Route path="/login" element={<LoginPage setToken={setToken} />} />
+                <Route path="/Register" element={<RegisterPage />} />
+                <Route path="/Admin" element={<AdminPage />} />
+                <Route path="/Users" element={<UserPage token={jwtToken} />} />
+                <Route path="/Food" element={<FoodPage /> } />
+            
+             
             </Routes>
         </div>
     ) 

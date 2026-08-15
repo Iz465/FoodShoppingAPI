@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import GetCategories from '../Services/CategoryService'
 import type { Category } from '../TypeScripts/Category'
 import { useEffect, useState } from 'react'
@@ -16,7 +17,8 @@ function CategoryPage() {
         }
         getCategories()
     }, [])
-  
+
+    
 
     return (
         < div >
@@ -25,13 +27,14 @@ function CategoryPage() {
         <p></p>
             {
                 categories.map((category) => (
-                    <button key={category.id}>{category.name}</button>
+                    <Link to="/Food" key={category.id}>{category.name}</Link>
                 ))
             }
-        <p></p>
+            <p></p>
+ 
     </div >
     )
-
+    
 }
 
 export default CategoryPage 
