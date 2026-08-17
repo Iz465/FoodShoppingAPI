@@ -10,7 +10,7 @@ async function login()
             },
             body: JSON.stringify(
                 {
-                    'username': "Vanescula", // working username is Vanescula // also an admin 
+                    'username': "Vanescula", // working username is Vanescula // also an admin
                     'password': "fangs" // working password is fangs
                 })
         })

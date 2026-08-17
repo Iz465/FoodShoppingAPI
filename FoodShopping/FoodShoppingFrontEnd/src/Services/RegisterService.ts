@@ -9,8 +9,8 @@ async function CreateAccount()
             },
             body: JSON.stringify(
             {
-                'username': "Jaddy",
-                'password': "fightCaves"
+                'username': "dharok",
+                'password': "BARROWS70"
             })
 
         })

@@ -59,7 +59,7 @@ namespace FoodShoppingAPI.Services
             var user = await _context.Users.FindAsync(id);
             if (user == null)
                 return EAuthentication.UserNotFound;
-            
+
 
             if (!string.IsNullOrWhiteSpace(dto.OldPassword)) // must put in old password to verify its your account
             {
@@ -79,6 +79,9 @@ namespace FoodShoppingAPI.Services
                     user.Username = dto.Username;
 
             }
+
+            else
+                return EAuthentication.PasswordNotFound;
 
          
 

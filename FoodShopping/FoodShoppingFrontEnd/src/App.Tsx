@@ -8,13 +8,12 @@ import RegisterPage from './Pages/RegisterPage.tsx'
 import AdminPage from './Pages/AdminPage.tsx'
 import UserPage from './Pages/UserPage.tsx'
 import FoodPage from './Pages/FoodPage.tsx'
+import FoodAdminPage from './Pages/FoodAdminPage.tsx'
 
 function App()
 {
   //  const [categories, setCategories] = useState<Category[]>([])
     const [jwtToken, setToken] = useState<string>("")
-
-    console.log("1. App RETURNED:", jwtToken);
 
     return (
       
@@ -45,7 +44,8 @@ function App()
                 <Route path="/Register" element={<RegisterPage />} />
                 <Route path="/Admin" element={<AdminPage />} />
                 <Route path="/Users" element={<UserPage token={jwtToken} />} />
-                <Route path="/Food" element={<FoodPage /> } />
+                <Route path="/Food" element={<FoodPage />} />
+                <Route path="/FoodAdmin" element={<FoodAdminPage token={jwtToken} />} />
             
              
             </Routes>
