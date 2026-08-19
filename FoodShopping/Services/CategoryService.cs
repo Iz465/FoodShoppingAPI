@@ -49,8 +49,10 @@ namespace FoodShoppingAPI.Services
             if (category == null)
                 return false;
 
-            category.Name = dto.Name;
-            category.ImageUrl = dto.ImageUrl;
+            if(dto.Name != null)
+                category.Name = dto.Name;
+            if (dto.ImageUrl != null)
+                category.ImageUrl = dto.ImageUrl;
             await _context.SaveChangesAsync();
 
             return true;
@@ -80,6 +82,11 @@ namespace FoodShoppingAPI.Services
         {
             var category = await _context.Categories.FindAsync(id);
             if (category == null)
+                return false;
+            
+
+            var foods = await _context.Foods.AnyAsync(food => food.CategoryId == category.Id);
+            if(foods)
                 return false;
 
             _context.Remove(category);

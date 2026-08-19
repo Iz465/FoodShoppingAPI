@@ -17,8 +17,5 @@ namespace FoodShoppingAPI.Dtos.Foods
         [Required]
         public int CategoryId { get; set; } = new();
 
-        [Required]
-        [StringLength(100)]
-        public string Description { get; set; } = string.Empty;
     }
 }

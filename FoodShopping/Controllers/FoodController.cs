@@ -8,6 +8,7 @@ using FoodShoppingAPI.Dtos.Foods;
 using FoodShoppingAPI.Services;
 using FoodShoppingAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using FoodShoppingAPI_BackEnd.Enums;
 
 
 
@@ -55,13 +56,16 @@ namespace FoodShoppingAPI.Controllers
 
         public async Task<ActionResult> UpdateFood(int id, UpdateFoodDto dto)
         {
-            bool foodFound = await _foodService.UpdateFood(id, dto);
+            EFood eFood = await _foodService.UpdateFood(id, dto);
 
-            if (!foodFound)
-                return NotFound();
-          
-             return Ok();
-
+            switch(eFood)
+            {
+                case EFood.FoodNotFound: return NotFound("Food ID not found"); 
+                case EFood.CategoryNotMatching: return NotFound("Category ID not found"); 
+                case EFood.FoodEdited: return Ok();
+                default: return Ok();
+            }
+              
         }
 
         [Authorize(Roles = "Admin")]

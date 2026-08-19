@@ -1,3 +1,4 @@
+import type { Food } from "../TypeScripts/Food";
 
 export async function getFoods()
 {
@@ -22,15 +23,56 @@ export async function getFood(id: number)
     return data;
 }
 
-export async function deleteFood(token: string, id: number)
+export async function deleteFood(token: string, id: number): Promise<boolean>
 { 
     const response = await fetch(`http://localhost:5267/api/foods/${id}`, {
         method: 'DELETE',
         headers: {'Authorization': `Bearer ${token}`}
     })
 
-    if (!response.ok)
-        return null;
-    const data = response.json()
-    return data;
+    return response.ok
+}
+
+export async function editFood(token: string, food: Food, name?: string, price?: number | null,
+    quantity?: number | null, category?: number | null): Promise<boolean>
+{ 
+    
+    const response = await fetch(`http://localhost:5267/api/foods/${food.id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'name': name,
+            'price': price,
+            'quantity': quantity,
+            'categoryId': category
+        })
+    })
+
+  
+    return response.ok;
+
+}
+
+export async function createFood(token: string, name: string, price: number, quantity: number,
+    category: number): Promise<boolean>
+{ 
+    const response = await fetch('http://localhost:5267/api/foods', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'name': name,
+            'price': price,
+            'quantity': quantity,
+            'categoryId': category
+        })
+    })
+
+    return response.ok
+
 }

@@ -118,7 +118,7 @@ function UserPage({ token }: UserPageProps) {
             {isEditingUser && user && <div><h2> Edit User</h2>
                 <form onSubmit={(event) => EditSubmit(event, user)
                     
-                }>
+                }> 
                     <select defaultValue="" onChange={(event) => setSelectedUserRole(Number(event.target.value))}>
                         <option value="" disabled>Role</option>
                         <option value={1} >Member</option>

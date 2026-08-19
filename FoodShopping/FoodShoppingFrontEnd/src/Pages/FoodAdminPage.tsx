@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Food } from '../TypeScripts/Food'
-import { deleteFood, getFood, getFoods } from '../Services/FoodAdminService'
+import { createFood, deleteFood, editFood, getFood, getFoods } from '../Services/FoodAdminService'
 
 type FoodAdminPageProps = {
     token: string
@@ -12,9 +12,19 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
     const [food, setFood] = useState<Food | null>(null)
     const [id, setId] = useState<number | null>(null)
     const [message, setMessage] = useState<string>("")
+    const [isfoodEdit, setIsFoodEdit] = useState<boolean>(false)
+    const [name, setName] = useState<string>("")
+    const [price, setPrice] = useState<number | null>(null)
+    const [quantity, setQuantity] = useState<number | null>(null)
+    const [category, setCategory] = useState<number | null>(null)
+    const [isCreateFood, setIsCreateFood] = useState<boolean>(false)
+
+
 
     async function GetFoods()
     {
+        setIsFoodEdit(false)
+        setIsCreateFood(false);
         setMessage("")
         const data = await getFoods()
         setFoods(data)
@@ -23,6 +33,8 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
     async function GetFood(event: React.SubmitEvent<HTMLFormElement>) // event: React.SubmitEvent<HTMLFormElement>
     {
         event.preventDefault()
+        setIsFoodEdit(false)
+        setIsCreateFood(false);
         console.log("ID: ", id)
         if (!id)
         {
@@ -34,7 +46,7 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
 
         const data = await getFood(id)
         if (!data)
-            setMessage("User Not Found")
+            setMessage("Food Item Not Found")
         else
             setMessage("")
         setFood(data)
@@ -42,6 +54,8 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
 
     async function DeleteFood(food: Food)
     { 
+        setIsFoodEdit(false)
+        setIsCreateFood(false);
         setFood(null)
         setFoods([])
         if (!food)
@@ -56,7 +70,53 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
         setMessage("Food item has been removed")
     }
 
-    
+    async function EditFood(food: Food)
+    { 
+        setFood(food)
+        setFoods([])
+        setIsFoodEdit(true)
+       
+
+    }
+
+    async function SubmitEditFood(event: React.SubmitEvent<HTMLFormElement>, food: Food)
+    { 
+        event.preventDefault()
+        setFood(null)
+        setFoods([])
+
+        const foodIsEdited = await editFood(token, food, name, price, quantity, category)
+        if (foodIsEdited)
+            setMessage("Food has been edited")
+       
+        else
+            setMessage("Can not be edited")
+       
+    }
+
+    async function CreateFood()
+    { 
+        setMessage("Create Food")
+        setIsCreateFood(true);
+    }
+
+    async function SubmitCreateFood(event: React.SubmitEvent<HTMLFormElement>)
+    { 
+        event.preventDefault()
+
+        const foodIsCreated = await createFood(token, name, price!, quantity!, category!)
+
+        if (foodIsCreated) { 
+            setMessage("Food Added")
+            setIsCreateFood(false)
+            setFood(null)
+            setFoods([])
+        }
+          
+        else
+            setMessage("Could Not Add Food")
+
+    }
 
     return (
         <div>
@@ -73,10 +133,38 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
                     Price: {food.price}
                     Quantity: {food.quantity}
                     Category: {food.category}
-                    Description: {food.description}
+                    <button onClick={() => EditFood(food)} >Edit</button>
+                    <button onClick={() => DeleteFood(food)}>Delete</button>
                 </p>
             )}
+
+            {isfoodEdit && food &&(
+                <div>
+                    <h1>Edit Food</h1>
+                    <form onSubmit={(event) => SubmitEditFood(event, food)}>
+                        <input type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
+                        <input type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value)) } />
+                        <input type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
+                        <input type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
+                        <input type="submit" placeholder="Submit" />
+                    </form>
+                </div>
+                )
+            }
+            {isCreateFood && (
+                <div>
+                    <form onSubmit={(event) => SubmitCreateFood(event)} >
+                        <input type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
+                        <input type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value))} />
+                        <input type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
+                        <input type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
+                        <input type="submit" placeholder="Submit" />
+                    </form>
+                </div>
+            )}
+
             <button onClick={GetFoods} >View Foods</button>
+            <button onClick={CreateFood}>Add Food Item</button>
             {
                 foods.map((food) => (
                     <div key={food.id}>
@@ -85,8 +173,7 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
                             Price: {food.price}
                             Quantity: {food.quantity}
                             Category: {food.category}
-                            Description:{food.description}
-                            <button>Edit</button>
+                            <button onClick={() => EditFood(food)}>Edit</button>
                             <button onClick={() => DeleteFood(food)}>Delete</button>
                         </p>
                     </div>

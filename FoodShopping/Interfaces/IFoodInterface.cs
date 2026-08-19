@@ -1,4 +1,5 @@
 ﻿using FoodShoppingAPI.Dtos.Foods;
+using FoodShoppingAPI_BackEnd.Enums;
 
 namespace FoodShoppingAPI.Interfaces
 {
@@ -8,7 +9,7 @@ namespace FoodShoppingAPI.Interfaces
             string? sortBy, bool descending, string? search, int? page, int? pageSize);
         Task<FoodDto> GetSpecificFood(int id);
 
-        Task<bool> UpdateFood(int id, UpdateFoodDto dto);
+        Task<EFood> UpdateFood(int id, UpdateFoodDto dto);
 
         Task<FoodDto> CreateFood(CreateFoodDto dto);
 

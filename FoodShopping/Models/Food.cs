@@ -21,8 +21,6 @@ namespace FoodShoppingAPI.Models
         [Required]
         public Category Category { get; set; } = null!;
 
-        [Required] [StringLength(100)]
-        public string Description { get; set; } = string.Empty;
     };
 
 }

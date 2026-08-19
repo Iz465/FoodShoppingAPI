@@ -9,6 +9,7 @@ import AdminPage from './Pages/AdminPage.tsx'
 import UserPage from './Pages/UserPage.tsx'
 import FoodPage from './Pages/FoodPage.tsx'
 import FoodAdminPage from './Pages/FoodAdminPage.tsx'
+import CategoryAdminPage from './Pages/CategoryAdminPage.tsx'
 
 function App()
 {
@@ -46,6 +47,7 @@ function App()
                 <Route path="/Users" element={<UserPage token={jwtToken} />} />
                 <Route path="/Food" element={<FoodPage />} />
                 <Route path="/FoodAdmin" element={<FoodAdminPage token={jwtToken} />} />
+                <Route path="/CategoriesAdmin" element={<CategoryAdminPage token={jwtToken} /> } />
             
              
             </Routes>
