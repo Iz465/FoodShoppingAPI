@@ -1,0 +1,126 @@
+﻿.AdminCategoryItems {
+    padding: 10px;
+    border: 3px solid grey;
+    margin: 20px;
+    margin-left:auto;
+    margin-right:auto;
+    width: 35%; /* 35 percent is original*/
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items:center;
+    background-color: rgba(0, 0, 0, .3);
+
+}
+
+.AdminFoodItems {
+    padding: 10px;
+    border: 3px solid grey;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%; 
+    color: white;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, .3);
+    display: grid;
+    grid-template-columns: 10% 25% 10% 10% 20% 25%;
+}
+
+.AdminUserItems {
+    padding: 10px;
+    border: 3px solid grey;
+    margin: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    color: white;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .3);
+    display: grid;
+    grid-template-columns: 10% 35% 25% 20% 20%;
+}
+
+
+.Width60Percent {
+    width: 60%;
+}
+
+.AdminCategoryButton {
+    padding: 20px;
+    margin: 5px;
+    border-radius: 3px;
+    font-weight: bold;
+    background-color: rgba(128, 128, 128, .4);
+    border: none;
+    transition: background-color .5s;
+}
+
+
+
+.DeleteButton {
+    padding: 10px;
+    background-color: rgba(255, 0, 0, .6);
+ 
+}
+
+.EditButton {
+    padding: 10px;
+    background-color: rgba(0, 255, 144, .6);
+
+}
+
+
+
+.FlashGreen:hover 
+{
+    background-color: green;
+}
+
+.FlashRed:hover {
+    background-color: red;
+}
+
+.FlashGrey:hover {
+
+    background-color: darkgray;
+}
+
+.Title {
+    margin: 60px;
+}
+
+.Message {
+    margin: 30px;
+}
+
+.Input {
+    padding: 10px;
+    margin: 10px;
+}
+
+.Id{
+    width: 10%;
+}
+
+.NameWidth {
+    width: 20%;
+}
+
+.Price {
+    width: 10%;
+}
+
+.MarginUpDown20 {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.Link {
+    padding: 20px;
+    margin: 5px;
+    border-radius: 3px;
+    font-weight: bold;
+ 
+}

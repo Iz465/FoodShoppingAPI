@@ -1,0 +1,10 @@
+﻿.AdminSections {
+    display:flex;
+    justify-content: space-around;
+
+}
+
+.MarginTop40
+{
+    margin-top: 40px;
+}

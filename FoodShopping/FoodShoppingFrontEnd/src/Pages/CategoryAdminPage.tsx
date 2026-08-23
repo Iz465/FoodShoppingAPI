@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { createCategory, deleteCategory, editCategory, getCategories } from "../Services/CategoryAdminService"
 import type { Category } from "../TypeScripts/Category"
+import "./CategoryAdminPage.css";
 
 type CategoryAdminPageProps = {
     token: string
@@ -19,6 +20,7 @@ function CategoryAdminPage({ token }: CategoryAdminPageProps)
     {
         setIsCreateCategory(false)
         setIsEditCategory(false)
+        setMessage("");
         const data = await getCategories()
         setCategories(data)
     }
@@ -42,6 +44,7 @@ function CategoryAdminPage({ token }: CategoryAdminPageProps)
 
     async function CreateCategory()
     {
+        setIsEditCategory(false)
         setIsCreateCategory(true)
         setCategories([])
         setMessage("Create Category")
@@ -93,41 +96,47 @@ function CategoryAdminPage({ token }: CategoryAdminPageProps)
 
     return (
         <div>
-            <h1>Categories</h1>
+            <h1 className="Title">Categories</h1>
+          
+            <button className="AdminCategoryButton FlashGrey MarginUpDown20" onClick={GetCategories}>View Categories</button>
+            <button className="AdminCategoryButton FlashGrey MarginUpDown20" onClick={CreateCategory} >Create Category</button>
             {message && (
-                <h2>{message}</h2>
+                <h2 className="Message">{message}</h2>
             )}
-            <button onClick={GetCategories}>View Categories</button>
-            <button onClick={CreateCategory} >Create Category</button>
             {isCreateCategory && (
                 <div>
                     <form onSubmit={(event) => SubmitCreateCategory(event)} >
-                        <input type="text" placeholder="Name" onChange={(event) => setName(event.target.value) } />
-                        <input type="text" placeholder="Image URL" onChange={(event) => setImageUrl(event.target.value)} />
-                        <input type="submit" placeholder="Submit" />
+                        <input className="Input" type="text" placeholder="Name" onChange={(event) => setName(event.target.value) } />
+                        <input className="Input" type="text" placeholder="Image URL" onChange={(event) => setImageUrl(event.target.value)} />
+                        <input className="Input" type="submit" placeholder="Submit" />
                     </form>
                 </div>
             )}
             {isEditCategory && (
                 <div>
                     <form onSubmit={(event) => SubmitEditCategory(event)} >
-                        <input type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
-                        <input type="text" placeholder="Image URL" onChange={(event) => setImageUrl(event.target.value)} />
-                        <input type="submit" placeholder="Submit" />
+                        <input className="Input" type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
+                        <input className="Input" type="text" placeholder="Image URL" onChange={(event) => setImageUrl(event.target.value)} />
+                        <input className="Input" type="submit" placeholder="Submit" />
                     </form>
                 </div>
             )}
-            {categories.map((category) => (
-                <div key={category.id}>
-                    <p>ID: {category.id}
-                       Name: {category.name}
-                        Image: {category.image}
-                        <button onClick={() => EditCategory(category)} >Edit</button>
-                        <button onClick={() => DeleteCategory(category)} >Delete</button>
-                    </p>
+       
+           
+            {categories.map((category) => ( // AdminCategory-Page 
+                <div key={category.id} className="AdminCategoryItems">
+                    <p>{category.id} </p>
+                    <p> {category.name}   </p>
+                    {/* <p>    Image: {category.image}   </p> */}
+                 <div> 
+
+                        <button className="AdminCategoryButton EditButton FlashGreen"  onClick={() => EditCategory(category)} >Edit</button>
+                        <button className="AdminCategoryButton DeleteButton FlashRed" onClick={() => DeleteCategory(category)} >Delete</button>
+                    </div>
                 </div>
             ))
-            }
+                }
+
         </div>
 
     )

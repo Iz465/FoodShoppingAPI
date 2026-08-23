@@ -10,36 +10,48 @@ import UserPage from './Pages/UserPage.tsx'
 import FoodPage from './Pages/FoodPage.tsx'
 import FoodAdminPage from './Pages/FoodAdminPage.tsx'
 import CategoryAdminPage from './Pages/CategoryAdminPage.tsx'
+import "./Pages/CategoryAdminPage.css";
+import "./Pages/DefaultCSS.css";
+import "./App.css";
+
 
 function App()
 {
-  //  const [categories, setCategories] = useState<Category[]>([])
+ 
     const [jwtToken, setToken] = useState<string>("")
 
     return (
       
         < div >
+        <div>
+           <Link to="/" className="Home">
+                   <h2>Home</h2>
+                </Link> 
+            </div>
             <Routes>
                 <Route path="/" element={
 
                 <div>
                
-                    <h1> Food Shopping</h1>
-                    <p>Buy Delicious Food here! Ordered to your location!</p>
-                        <p></p>
-
-                    <Link to="/Categories">View the Food!</Link>
-                    
+                    <h1 className="Title"> Food Shopping</h1>
+                        <h2 className="Message">Buy Delicious Food here! Ordered to your location!</h2>
+                        
+                        <div className="Sections">
+                            <Link to="/Categories" className="Link"><h2>View the Food</h2></Link>    
+                
                 
                     
-                    <Link to="/Register">Create an Account</Link>
+                            <Link to="/Register" className="Link"><h2>Create An Account</h2></Link> 
             
 
-                        <Link to="/login">Log in to Your Account</Link>
-                        <p></p>
-                        <Link to="/Admin">Admin</Link>
+                            <Link to="/login" className="Link"><h2>Log into Your Account</h2></Link> 
+                        
+                            <Link to="/Admin" className="Link"><h2>Admin</h2></Link> 
+                        </div>
                  </div>
-                    }/>
+                    } />
+                   
+             
                 <Route path="/Categories" element={<CategoryPage />} />
                 <Route path="/login" element={<LoginPage setToken={setToken} />} />
                 <Route path="/Register" element={<RegisterPage />} />

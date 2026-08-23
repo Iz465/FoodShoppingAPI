@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Food } from '../TypeScripts/Food'
 import { createFood, deleteFood, editFood, getFood, getFoods } from '../Services/FoodAdminService'
+import "./CategoryAdminPage.css";
 
 type FoodAdminPageProps = {
     token: string
@@ -12,7 +13,8 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
     const [food, setFood] = useState<Food | null>(null)
     const [id, setId] = useState<number | null>(null)
     const [message, setMessage] = useState<string>("")
-    const [isfoodEdit, setIsFoodEdit] = useState<boolean>(false)
+    const [isfoodEdit, setIsFoodEdit] = useState(false)
+    const [isfoodSearch, setIsfoodSearch] = useState(false)
     const [name, setName] = useState<string>("")
     const [price, setPrice] = useState<number | null>(null)
     const [quantity, setQuantity] = useState<number | null>(null)
@@ -23,6 +25,7 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
 
     async function GetFoods()
     {
+        setIsfoodSearch(false);
         setIsFoodEdit(false)
         setIsCreateFood(false);
         setMessage("")
@@ -35,6 +38,7 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
         event.preventDefault()
         setIsFoodEdit(false)
         setIsCreateFood(false);
+        setFoods([])
         console.log("ID: ", id)
         if (!id)
         {
@@ -42,8 +46,8 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
             console.log("Message is: ", message)
             return
         }
-            
 
+        setIsfoodSearch(true);
         const data = await getFood(id)
         if (!data)
             setMessage("Food Item Not Found")
@@ -54,6 +58,7 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
 
     async function DeleteFood(food: Food)
     { 
+        setIsfoodSearch(false);
         setIsFoodEdit(false)
         setIsCreateFood(false);
         setFood(null)
@@ -72,9 +77,12 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
 
     async function EditFood(food: Food)
     { 
+        setIsfoodSearch(false);
         setFood(food)
         setFoods([])
+        setMessage("Edit Food")
         setIsFoodEdit(true)
+        setIsCreateFood(false);
        
 
     }
@@ -97,7 +105,10 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
     async function CreateFood()
     { 
         setMessage("Create Food")
-        setIsCreateFood(true);
+        setIsCreateFood(true)
+        setIsFoodEdit(false)
+        setIsfoodSearch(false)
+        setFoods([])
     }
 
     async function SubmitCreateFood(event: React.SubmitEvent<HTMLFormElement>)
@@ -120,62 +131,70 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
 
     return (
         <div>
-            <h1>Food</h1>
+            <h1 className="Title">Food</h1>
             <form onSubmit={GetFood}>
-                <input type="number" placeholder="Search Food ID" onChange={(event) => setId(Number(event.target.value))} />
+                <input className="Input" type="number" placeholder="Search Food ID" onChange={(event) => setId(Number(event.target.value))} />
             </form>
+         
+         
+            <button className="AdminCategoryButton FlashGrey MarginUpDown20" onClick={GetFoods} >View Foods</button>
+            <button className="AdminCategoryButton FlashGrey MarginUpDown20" onClick={CreateFood}>Add Food Item</button>
+
             {message && (
-                <p>{message}</p>
-            )}
-            {food && (
-                <p>ID: {food.id}
-                    Name: {food.name}
-                    Price: {food.price}
-                    Quantity: {food.quantity}
-                    Category: {food.category}
-                    <button onClick={() => EditFood(food)} >Edit</button>
-                    <button onClick={() => DeleteFood(food)}>Delete</button>
-                </p>
+                <h2 className="Message">{message}</h2>
             )}
 
-            {isfoodEdit && food &&(
+            {isfoodEdit && food && (
                 <div>
-                    <h1>Edit Food</h1>
+
                     <form onSubmit={(event) => SubmitEditFood(event, food)}>
-                        <input type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
-                        <input type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value)) } />
-                        <input type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
-                        <input type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
-                        <input type="submit" placeholder="Submit" />
+                        <input className="Input" type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
+                        <input className="Input" type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value))} />
+                        <input className="Input" type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
+                        <input className="Input" type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
+                        <input className="Input" type="submit" placeholder="Submit" />
                     </form>
                 </div>
-                )
+            )
             }
             {isCreateFood && (
                 <div>
                     <form onSubmit={(event) => SubmitCreateFood(event)} >
-                        <input type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
-                        <input type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value))} />
-                        <input type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
-                        <input type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
-                        <input type="submit" placeholder="Submit" />
+                        <input className="Input" type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
+                        <input className="Input" type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value))} />
+                        <input className="Input" type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
+                        <input className="Input" type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
+                        <input className="Input" type="submit" placeholder="Submit" />
                     </form>
                 </div>
             )}
 
-            <button onClick={GetFoods} >View Foods</button>
-            <button onClick={CreateFood}>Add Food Item</button>
+            {food && isfoodSearch && (
+                <div className="AdminFoodItems">
+                    <p>{food.id}</p>
+                    <p>{food.name}</p>
+                    <p>{food.price}</p>
+                    <p>{food.quantity}</p>
+                    <p>{food.category}</p>
+                    <div>
+                        <button className="AdminCategoryButton EditButton FlashGreen" onClick={() => EditFood(food)} >Edit</button>
+                        <button className="AdminCategoryButton DeleteButton FlashRed" onClick={() => DeleteFood(food)}>Delete</button>
+                    </div>
+                </div>
+            )}
+
             {
                 foods.map((food) => (
-                    <div key={food.id}>
-                        <p>ID: {food.id}
-                            Name: {food.name}
-                            Price: {food.price}
-                            Quantity: {food.quantity}
-                            Category: {food.category}
-                            <button onClick={() => EditFood(food)}>Edit</button>
-                            <button onClick={() => DeleteFood(food)}>Delete</button>
-                        </p>
+                    <div className="AdminFoodItems" key={food.id}>
+                        <p > {food.id}  </p>
+                        <p > {food.name} </p>
+                        <p > {food.price} </p>
+                        <p > {food.quantity} </p>
+                        <p > {food.category} </p>
+                        <div >
+                            <button className="AdminCategoryButton EditButton FlashGreen" onClick={() => EditFood(food)}>Edit</button>
+                            <button className="AdminCategoryButton DeleteButton FlashRed" onClick={() => DeleteFood(food)}>Delete</button>
+                      </div>
                     </div>
                 ))
             }

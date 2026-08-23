@@ -1,5 +1,6 @@
 import { Route, Routes, Link } from "react-router-dom"
-
+import "./CategoryAdminPage.css";
+import "./AdminPage.css";
 
 function AdminPage()
 { 
@@ -8,13 +9,16 @@ function AdminPage()
         
             <Routes>
                 <Route path="/" element={
-                <div>
+                    <div>
+                        <h1 className="Title">Admin Page</h1>
+                    <div className="AdminSections">
           
-                    <h1>Admin Page</h1>
-                    <Link to="/Users">Users</Link>    
-                    <Link to="/FoodAdmin">Food</Link>
-                    <Link to="/CategoriesAdmin">Categories</Link>
-                 </div>
+                 
+                            <h2 className="MarginTop40"><Link to="/Users" className="Link">Users</Link>  </h2>  
+                            <h2 className="MarginTop40"> <Link to="/FoodAdmin" className="Link">Food</Link> </h2> 
+                            <h2 className="MarginTop40"> <Link to="/CategoriesAdmin" className="Link">Categories</Link> </h2> 
+                        </div>
+                    </div>
                 } />
        
             </Routes>

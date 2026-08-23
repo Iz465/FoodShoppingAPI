@@ -13,6 +13,7 @@ function UserPage({ token }: UserPageProps) {
     const [user, setUser] = useState<User | null>(null)
     const [id, setId] = useState<number | null>(null)
     const [message, setMessage] = useState<string>("")
+    const [isfoodSearch, setIsfoodSearch] = useState(false)
     const [isEditingUser, setIsEditingUser] = useState(false)
     const [selectedUserRole, setSelectedUserRole] = useState<number | null>(null)
 
@@ -20,6 +21,7 @@ function UserPage({ token }: UserPageProps) {
     async function GetUsers()
     {
         setIsEditingUser(false)
+        setIsfoodSearch(false)
         setMessage("")
         setUser(null!)
         const data = await getUsers(token)
@@ -30,6 +32,7 @@ function UserPage({ token }: UserPageProps) {
     async function GetUser(event: React.SubmitEvent<HTMLFormElement>)
     {
         setIsEditingUser(false)
+        setIsfoodSearch(true)
         setMessage("")
         event.preventDefault()
 
@@ -68,6 +71,7 @@ function UserPage({ token }: UserPageProps) {
 
     async function EditUser(user: User)
     {
+        setIsfoodSearch(false)
         setUsers([])
         const data = await getUser(token, user.id)
         if (!data) return;
@@ -100,41 +104,47 @@ function UserPage({ token }: UserPageProps) {
 
     return (
         <div>
-            <h1>User Page</h1>
-            <button onClick={GetUsers}>View Users</button>
+            <h1 className="Title">User Page</h1>
             <form onSubmit={GetUser}>
-                <input type="number" placeholder="Search ID" onChange={(event) => setId(Number(event.target.value))} />
+                <input className="Input" type="number" placeholder="Search ID" onChange={(event) => setId(Number(event.target.value))} />
             </form>  
+            <button className="AdminCategoryButton FlashGrey MarginUpDown20" onClick={GetUsers}>View Users</button>
+          
             
-            {message && <h2>{message}</h2>}
-            {user &&(
-            
-                <p>ID: {user.id}
-                    Username: {user.username}
-                    User Role: {user.userRole}
-                    <button onClick={() => EditUser(user)} >Edit</button>
-                    <button onClick={() => DeleteUser(user)} >Delete</button></p>
+            {message && <h2 className="Message">{message}</h2>}
+            {user && isfoodSearch &&(
+            <div className="AdminUserItems"> 
+                    <p>{user.id}</p>
+                    <p>{user.username}</p>
+                    <p>{user.userRole}</p>
+                    <div>
+                    <button className="AdminCategoryButton EditButton FlashGreen" onClick={() => EditUser(user)}>Edit</button>
+                        <button className="AdminCategoryButton DeleteButton FlashRed"  onClick={() => DeleteUser(user)} >Delete</button>
+                    </div>
+                </div>
             )}
             {isEditingUser && user && <div><h2> Edit User</h2>
                 <form onSubmit={(event) => EditSubmit(event, user)
                     
                 }> 
-                    <select defaultValue="" onChange={(event) => setSelectedUserRole(Number(event.target.value))}>
+                    <select className="Input" defaultValue="" onChange={(event) => setSelectedUserRole(Number(event.target.value))}>
                         <option value="" disabled>Role</option>
                         <option value={1} >Member</option>
                         <option value={2} >Admin</option>
                     </select>
-                    <input type="submit"/>
+                    <input className="Input" type="submit"/>
                 </form> </div>
             }
             {
                 users.map((user) => (
-                    <div key={user.id}>
-                        <p>ID: {user.id}
-                            Username: {user.username}
-                            User Role: {user.userRole}
-                            <button onClick={() => EditUser(user)} >Edit</button>
-                            <button onClick={() => DeleteUser(user)} >Delete</button></p>
+                    <div className="AdminUserItems" key={user.id}>
+                        <p> {user.id} </p>
+                        <p> {user.username}</p>
+                        <p> {user.userRole}</p>
+                        <div>
+                        <button className="AdminCategoryButton EditButton FlashGreen" onClick={() => EditUser(user)} >Edit</button>
+                            <button className="AdminCategoryButton DeleteButton FlashRed" onClick={() => DeleteUser(user)} >Delete</button>
+                        </div>
                     </div>)) 
             }
         </div>

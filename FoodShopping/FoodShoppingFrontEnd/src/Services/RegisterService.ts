@@ -1,7 +1,7 @@
 
-async function CreateAccount()
+async function createAccount(username: string, password: string): Promise<boolean>
 {
-    await fetch('http://localhost:5267/api/users/register',
+    const response = await fetch('http://localhost:5267/api/users/register',
         {
             method: 'POST',
             headers: {
@@ -9,12 +9,12 @@ async function CreateAccount()
             },
             body: JSON.stringify(
             {
-                'username': "dharok",
-                'password': "BARROWS70"
+                    'username': username,
+                    'password': password
             })
 
         })
-    
+    return response.ok
 }
 
-export default CreateAccount
+export default createAccount
