@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import GetCategories from '../Services/CategoryService'
 import type { Category } from '../TypeScripts/Category'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState, type SetStateAction, type Dispatch } from 'react'
+import "./CategoryPage.css";
 
-
-function CategoryPage() {
+type CategoryPageProps = {
+    setCategory: Dispatch<SetStateAction<number | null>>
+}
+function CategoryPage({setCategory}: CategoryPageProps) {
 
     const [categories, setCategories] = useState<Category[]>([])
 
@@ -18,19 +21,30 @@ function CategoryPage() {
         getCategories()
     }, [])
 
-    
+    async function TestClick(id: number) { 
+        setCategory(id);
+    }
 
     return (
         < div >
-        <h1>Category Page</h1>
-        <p>Categories</p>
-        <p></p>
-            {
-                categories.map((category) => (
-                    <Link to="/Food" key={category.id}>{category.name}</Link>
-                ))
-            }
-            <p></p>
+        <h1 className= "Title">Food Categories</h1>
+       
+   
+            
+ 
+            <div className="CategoryLayout">
+                        {
+                    categories.map((category) => (
+                        <div className="IndividualCategoryLayout">
+
+                            <h2>{category.name}</h2>
+                            <Link to="/Food"> <img className="CategoryImage ImageHover" src={category.imageUrl} onClick={() => TestClick(category.id)} /> </Link>
+                        </div>
+                            ))}
+                          
+                    </div>
+            
+        
  
     </div >
     )

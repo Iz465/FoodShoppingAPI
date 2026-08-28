@@ -1,7 +1,7 @@
 @FoodShoppingAPI_HostAddress = http://localhost:5267
 
 ###
-GET {{FoodShoppingAPI_HostAddress}}/api/foods
+GET {{FoodShoppingAPI_HostAddress}}/api/foods?categoryId=36
 
 ### 
 GET {{FoodShoppingAPI_HostAddress}}/api/foods/14

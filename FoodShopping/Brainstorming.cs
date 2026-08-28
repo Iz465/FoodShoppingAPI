@@ -4,22 +4,18 @@ namespace FoodShoppingAPI
 {
     public class Brainstorming
     {
-       // front end goals
-       // make an admin page to show other pages admins have access to such as editing the different tables.
+
+
+        // Cart needs its own page showing the food the user has ordered and the total price
+        // cart page needs an option to remove food from users cart
+        // Checkout still needs to happen
+
+
+
+        // the category choosing for edit and creation of food needs to have options instead of an integer input.
+
+        // after all this improve css
+
     }
 
-    // what to test. 
-
-    // test all the requests work. 
-    // so first test the user requests
-    // make sure authorization on user requests works.
-
-    // test category requests after. 
-
-    // test food requests after.
-
-
-    // improvements: Admins shouldnt be able to delete other admins.
-
-    // admins can delete their own account and then still access requests. im guessing because the jwt token i have in bearer still says admin. 
 }

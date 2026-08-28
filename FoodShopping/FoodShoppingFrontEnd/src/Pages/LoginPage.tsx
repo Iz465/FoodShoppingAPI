@@ -2,12 +2,14 @@
 import login from '../Services/LoginService'
 import { useState, type Dispatch, type SetStateAction } from 'react'
 import "./CategoryAdminPage.css";
+import { getFoodQuantity } from '../Services/CartService';
 
 
 type LoginPageProps = {
     setToken: Dispatch<SetStateAction<string>>
+    setCartQuantityProp: Dispatch<SetStateAction<number | null>>
 }
-function LoginPage({ setToken }: LoginPageProps)
+function LoginPage({ setToken, setCartQuantityProp }: LoginPageProps)
 {
 
     const [message, setMessage] = useState<string>("")
@@ -30,6 +32,8 @@ function LoginPage({ setToken }: LoginPageProps)
             setMessage(`Welcome Back ${username}`)
             setPassword(null)
             setIsLoggingIn(false)
+            const foodQuantity = await getFoodQuantity(token)
+            setCartQuantityProp(foodQuantity)
         }
 
         else

@@ -31,6 +31,7 @@ namespace FoodShoppingAPI.Controllers
         [HttpGet] 
         public async Task<ActionResult<List<UserDto>>> GetUsers()
         {
+          
             List<UserDto> users = new();
             return Ok(users = await _userService.GetUsers());
         }
@@ -119,6 +120,13 @@ namespace FoodShoppingAPI.Controllers
             return NoContent(); 
         }
 
+        [Authorize (Roles = "Admin")]
+        [HttpGet("homePage/")]
+
+        public async Task<ActionResult> CheckAuthentication()
+        {
+            return Ok(true);
+        }
     }
 
  

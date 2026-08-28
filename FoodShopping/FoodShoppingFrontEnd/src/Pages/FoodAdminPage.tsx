@@ -17,9 +17,9 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
     const [isfoodSearch, setIsfoodSearch] = useState(false)
     const [name, setName] = useState<string>("")
     const [price, setPrice] = useState<number | null>(null)
-    const [quantity, setQuantity] = useState<number | null>(null)
     const [category, setCategory] = useState<number | null>(null)
     const [isCreateFood, setIsCreateFood] = useState<boolean>(false)
+    const [imageUrl, setImageUrl] = useState<string | null>(null)
 
 
 
@@ -93,7 +93,7 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
         setFood(null)
         setFoods([])
 
-        const foodIsEdited = await editFood(token, food, name, price, quantity, category)
+        const foodIsEdited = await editFood(token, food, name, price, category, imageUrl)
         if (foodIsEdited)
             setMessage("Food has been edited")
        
@@ -115,7 +115,7 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
     { 
         event.preventDefault()
 
-        const foodIsCreated = await createFood(token, name, price!, quantity!, category!)
+        const foodIsCreated = await createFood(token, name, price!, category!, imageUrl!)
 
         if (foodIsCreated) { 
             setMessage("Food Added")
@@ -150,8 +150,8 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
                     <form onSubmit={(event) => SubmitEditFood(event, food)}>
                         <input className="Input" type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
                         <input className="Input" type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value))} />
-                        <input className="Input" type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
                         <input className="Input" type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
+                        <input className="Input" type="text" placeholder="Image Url" onChange={(event) => setImageUrl(event.target.value) } />
                         <input className="Input" type="submit" placeholder="Submit" />
                     </form>
                 </div>
@@ -162,8 +162,8 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
                     <form onSubmit={(event) => SubmitCreateFood(event)} >
                         <input className="Input" type="text" placeholder="Name" onChange={(event) => setName(event.target.value)} />
                         <input className="Input" type="number" placeholder="Price" onChange={(event) => setPrice(Number(event.target.value))} />
-                        <input className="Input" type="number" placeholder="Quantity" onChange={(event) => setQuantity(Number(event.target.value))} />
                         <input className="Input" type="number" placeholder="Category" onChange={(event) => setCategory(Number(event.target.value))} />
+                        <input className="Input" type="text" placeholder="Image Url" onChange={(event) => setImageUrl(event.target.value)} />
                         <input className="Input" type="submit" placeholder="Submit" />
                     </form>
                 </div>
@@ -174,7 +174,6 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
                     <p>{food.id}</p>
                     <p>{food.name}</p>
                     <p>{food.price}</p>
-                    <p>{food.quantity}</p>
                     <p>{food.category}</p>
                     <div>
                         <button className="AdminCategoryButton EditButton FlashGreen" onClick={() => EditFood(food)} >Edit</button>
@@ -189,7 +188,6 @@ function FoodAdminPage({ token }: FoodAdminPageProps)
                         <p > {food.id}  </p>
                         <p > {food.name} </p>
                         <p > {food.price} </p>
-                        <p > {food.quantity} </p>
                         <p > {food.category} </p>
                         <div >
                             <button className="AdminCategoryButton EditButton FlashGreen" onClick={() => EditFood(food)}>Edit</button>

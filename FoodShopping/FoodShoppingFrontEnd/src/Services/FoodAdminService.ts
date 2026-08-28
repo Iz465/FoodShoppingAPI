@@ -34,7 +34,7 @@ export async function deleteFood(token: string, id: number): Promise<boolean>
 }
 
 export async function editFood(token: string, food: Food, name?: string, price?: number | null,
-    quantity?: number | null, category?: number | null): Promise<boolean>
+     category?: number | null, imageUrl?: string | null): Promise<boolean>
 { 
     
     const response = await fetch(`http://localhost:5267/api/foods/${food.id}`, {
@@ -46,8 +46,8 @@ export async function editFood(token: string, food: Food, name?: string, price?:
         body: JSON.stringify({
             'name': name,
             'price': price,
-            'quantity': quantity,
-            'categoryId': category
+            'categoryId': category,
+            'imageUrl': imageUrl
         })
     })
 
@@ -56,8 +56,8 @@ export async function editFood(token: string, food: Food, name?: string, price?:
 
 }
 
-export async function createFood(token: string, name: string, price: number, quantity: number,
-    category: number): Promise<boolean>
+export async function createFood(token: string, name: string, price: number,
+    category: number, imageUrl: string): Promise<boolean>
 { 
     const response = await fetch('http://localhost:5267/api/foods', {
         method: 'POST',
@@ -68,8 +68,8 @@ export async function createFood(token: string, name: string, price: number, qua
         body: JSON.stringify({
             'name': name,
             'price': price,
-            'quantity': quantity,
-            'categoryId': category
+            'categoryId': category,
+            'imageUrl': imageUrl
         })
     })
 

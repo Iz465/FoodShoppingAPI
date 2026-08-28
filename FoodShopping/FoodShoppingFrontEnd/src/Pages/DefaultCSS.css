@@ -3,3 +3,21 @@
  display:flex;
  margin:20px;
 }
+
+.CartImage {
+    width: 70px;
+    height: 70px;
+    object-fit:cover;
+  
+}
+
+.AppDiv {
+    display:flex;
+    justify-content:space-between;
+    margin:20px;
+}
+
+.CartNumber{
+    color:white;
+    font-weight: bold;
+}

@@ -20,13 +20,13 @@ namespace FoodShoppingAPI.Services
             }
 
 
-            public async Task<List<FoodDto>> GetFoods(string? category, string? name, float? price,
+            public async Task<List<FoodDto>> GetFoods(int? categoryId, string? name, float? price,
              string? sortBy, bool descending, string? search, int? page, int? pageSize)
         {
             var query = _context.Foods.AsQueryable(); // IQueryable<Food> this is its type. using var though as you can figure that out with the asqueryable() method.
 
-            if (!string.IsNullOrWhiteSpace(category))
-                query = query.Where(food => food.Category.Name == category);
+            if (categoryId != null)
+                query = query.Where(food => food.CategoryId == categoryId);
 
             if (!string.IsNullOrWhiteSpace(name))
                 query = query.Where(food => food.Name == name);
@@ -53,8 +53,8 @@ namespace FoodShoppingAPI.Services
                 Id = food.Id,
                 Name = food.Name,
                 Price = food.Price,
-                Quantity = food.Quantity,
-                Category = food.Category.Name
+                Category = food.Category.Name,
+                ImageUrl = food.ImageUrl
             }).ToListAsync();
         }
 
@@ -82,8 +82,8 @@ namespace FoodShoppingAPI.Services
                 Id = food.Id,
                 Name = food.Name,
                 Price = food.Price,
-                Quantity = food.Quantity,
-                Category = food.Category.Name
+                Category = food.Category.Name,
+                ImageUrl = food.ImageUrl
             }).FirstOrDefaultAsync(food => food.Id == id);
 
             return dto!;
@@ -109,9 +109,9 @@ namespace FoodShoppingAPI.Services
                 food.Name = dto.Name;
             if(dto.Price != null)
                 food.Price = dto.Price.Value;
-            if(dto.Quantity != null)
-                food.Quantity = dto.Quantity.Value;
-        
+            if (dto.ImageUrl != null)
+                food.ImageUrl = dto.ImageUrl;
+          
             await _context.SaveChangesAsync();
             return EFood.FoodEdited;
 
@@ -128,8 +128,9 @@ namespace FoodShoppingAPI.Services
             {
                 Name = dto.Name,
                 Price = dto.Price,
-                Quantity = dto.Quantity,
-                CategoryId = dto.CategoryId
+                CategoryId = dto.CategoryId,
+                ImageUrl = dto.ImageUrl
+      
             };
 
             _context.Foods.Add(food);
@@ -142,8 +143,9 @@ namespace FoodShoppingAPI.Services
                 Id = food.Id,
                 Name = food.Name,
                 Price = food.Price,
-                Quantity = food.Quantity,
-                Category = category.Name
+                Category = category.Name,
+                ImageUrl = food.ImageUrl
+               
             };
 
             return foodDto;

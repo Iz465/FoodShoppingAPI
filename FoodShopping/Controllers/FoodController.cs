@@ -9,6 +9,7 @@ using FoodShoppingAPI.Services;
 using FoodShoppingAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using FoodShoppingAPI_BackEnd.Enums;
+using System.Security.Claims;
 
 
 
@@ -30,10 +31,11 @@ namespace FoodShoppingAPI.Controllers
 
         [HttpGet]
         
-        public async Task<List<FoodDto>> GetFoods(string? category, string? name, float? price, // price should be decimal not float because float can round stuff up
+        public async Task<List<FoodDto>> GetFoods(int? categoryId, string? name, float? price, // price should be decimal not float because float can round stuff up
              string? sortBy, bool descending, string? search, int? page, int? pageSize)
         {
-            return await _foodService.GetFoods(category, name, price,
+            
+            return await _foodService.GetFoods(categoryId, name, price,
                 sortBy, descending, search, page, pageSize);
                 
         }

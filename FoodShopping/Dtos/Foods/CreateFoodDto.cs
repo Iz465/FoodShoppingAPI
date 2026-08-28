@@ -11,11 +11,11 @@ namespace FoodShoppingAPI.Dtos.Foods
         [Range(.1, 1000)]
         public float Price { get; set; }
 
-        [Range(1, int.MaxValue)]
-        public int Quantity { get; set; }
-
         [Required]
         public int CategoryId { get; set; } = new();
+
+        [Required]
+        public string ImageUrl { get; set; } = string.Empty;
 
     }
 }

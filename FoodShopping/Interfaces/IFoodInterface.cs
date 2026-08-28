@@ -5,7 +5,7 @@ namespace FoodShoppingAPI.Interfaces
 {
     public interface IFoodInterface
     {
-        Task<List<FoodDto>> GetFoods(string? category, string? name, float? price,
+        Task<List<FoodDto>> GetFoods(int? categoryId, string? name, float? price,
             string? sortBy, bool descending, string? search, int? page, int? pageSize);
         Task<FoodDto> GetSpecificFood(int id);
 

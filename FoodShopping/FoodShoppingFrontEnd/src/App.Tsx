@@ -1,7 +1,6 @@
-//import type { Food } from './TypeScripts/Food.ts'
-//import type { Category } from './TypeScripts/Category.ts'
+
 import LoginPage from './Pages/LoginPage.tsx'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Route, Routes, Link } from 'react-router-dom'
 import CategoryPage from './Pages/CategoryPage.tsx'
 import RegisterPage from './Pages/RegisterPage.tsx'
@@ -10,56 +9,49 @@ import UserPage from './Pages/UserPage.tsx'
 import FoodPage from './Pages/FoodPage.tsx'
 import FoodAdminPage from './Pages/FoodAdminPage.tsx'
 import CategoryAdminPage from './Pages/CategoryAdminPage.tsx'
-import "./Pages/CategoryAdminPage.css";
 import "./Pages/DefaultCSS.css";
 import "./App.css";
+import HomePage from './Pages/HomePage.tsx'
+import AddFoodPage from './Pages/AddFoodPage.tsx'
+import type { Food } from './TypeScripts/Food.ts'
+
 
 
 function App()
 {
  
     const [jwtToken, setToken] = useState<string>("")
+    const [foodCategory, setFoodCategory] = useState<number | null>(null)
+    const [foodRequest, setFoodRequest] = useState<Food | null>(null) 
+    const [cartQuantity, setCartQuantity] = useState<number | null>(null)
 
     return (
       
         < div >
-        <div>
+            <div className="AppDiv">
            <Link to="/" className="Home">
                    <h2>Home</h2>
-                </Link> 
+                </Link>
+                <div>
+              
+                <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/all-3/shopping-cart-9xhllmo2cb79djc9j7b5kb.png/shopping-cart-pe974q2wd8bzu5cueg3qr.png?_a=DATAiZAAZAA0"
+                    className="CartImage" />
+                <p className="CartNumber">{cartQuantity}</p>
+                </div>
             </div>
             <Routes>
-                <Route path="/" element={
-
-                <div>
                
-                    <h1 className="Title"> Food Shopping</h1>
-                        <h2 className="Message">Buy Delicious Food here! Ordered to your location!</h2>
-                        
-                        <div className="Sections">
-                            <Link to="/Categories" className="Link"><h2>View the Food</h2></Link>    
-                
-                
-                    
-                            <Link to="/Register" className="Link"><h2>Create An Account</h2></Link> 
-            
-
-                            <Link to="/login" className="Link"><h2>Log into Your Account</h2></Link> 
-                        
-                            <Link to="/Admin" className="Link"><h2>Admin</h2></Link> 
-                        </div>
-                 </div>
-                    } />
                    
-             
-                <Route path="/Categories" element={<CategoryPage />} />
-                <Route path="/login" element={<LoginPage setToken={setToken} />} />
+                <Route path="/" element={<HomePage token={jwtToken} />} />
+                <Route path="/Categories" element={<CategoryPage setCategory={setFoodCategory} />} />
+                <Route path="/login" element={<LoginPage setToken={setToken} setCartQuantityProp={setCartQuantity} />} />
                 <Route path="/Register" element={<RegisterPage />} />
                 <Route path="/Admin" element={<AdminPage />} />
                 <Route path="/Users" element={<UserPage token={jwtToken} />} />
-                <Route path="/Food" element={<FoodPage />} />
+                <Route path="/Food" element={<FoodPage category={foodCategory} setFoodRequestProp = { setFoodRequest } />} />
                 <Route path="/FoodAdmin" element={<FoodAdminPage token={jwtToken} />} />
-                <Route path="/CategoriesAdmin" element={<CategoryAdminPage token={jwtToken} /> } />
+                <Route path="/CategoriesAdmin" element={<CategoryAdminPage token={jwtToken} />} />
+                <Route path="/AddFood" element={<AddFoodPage food={foodRequest} token={jwtToken} setCartQuantityProp={setCartQuantity} /> } />
             
              
             </Routes>

@@ -2,6 +2,8 @@ using FoodShoppingAPI.Data;
 using FoodShoppingAPI.Interfaces;
 using FoodShoppingAPI.Models;
 using FoodShoppingAPI.Services;
+using FoodShoppingAPI_BackEnd.Services;
+using FoodShoppingAPI_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IFoodInterface, FoodService>();
 builder.Services.AddScoped<ICategoryInterface, CategoryService>();
 builder.Services.AddScoped<IUser, UserServices>();
+builder.Services.AddScoped<ICart, CartService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var secretKey = builder.Configuration["JWT:SecretKey"];

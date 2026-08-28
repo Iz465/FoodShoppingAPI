@@ -12,14 +12,14 @@ namespace FoodShoppingAPI.Models
         [Range(.1, 1000)]
         public float Price { get; set; }
 
-        [Range(1, int.MaxValue)]
-        public int Quantity { get; set; }
-
         [Required]
         public int CategoryId { get; set; } 
 
         [Required]
         public Category Category { get; set; } = null!;
+
+        [Required]
+        public string ImageUrl { get; set; } = string.Empty;
 
     };
 

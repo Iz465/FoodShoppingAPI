@@ -1,4 +1,5 @@
 ﻿using FoodShoppingAPI.Models;
+using FoodShoppingAPI_BackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodShoppingAPI.Data;
@@ -13,5 +14,6 @@ public class FoodDbContext : DbContext
     public DbSet<Food> Foods { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<Cart> Cart { get; set; }
 
 }

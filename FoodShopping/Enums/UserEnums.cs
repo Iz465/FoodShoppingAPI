@@ -16,4 +16,12 @@
         Success
     }
 
+    public enum ECart
+    {
+        UserNotFound,
+        FoodNotFound,
+        Success
+
+    }
+
 }
