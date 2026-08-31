@@ -7,6 +7,7 @@ using FoodShoppingAPI_BackEnd.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using FoodShoppingAPI.Dtos.Foods;
 
 namespace FoodShoppingAPI_BackEnd.Services
 {
@@ -80,5 +81,27 @@ namespace FoodShoppingAPI_BackEnd.Services
 
             return foodQuantity;
         }
+
+        public async Task<List<CartDto>> GetCartList(string? userId)
+        {
+            if (userId == null)
+                return null!;
+
+            var cartDto = await (from cart in _context.Cart
+                                 join food in _context.Foods
+                                  on cart.FoodId equals food.Id
+                                 where cart.UserId == int.Parse(userId)
+                                 select new CartDto
+                                 {
+                                     Id = cart.Id,
+                                     Food = food.Name,
+                                     Quantity = cart.FoodQuantity,
+                                     TotalPrice = food.Price * cart.FoodQuantity
+                                 }).ToListAsync();
+
+            return cartDto;
+        }
+
     }
 }
+

@@ -39,7 +39,7 @@ function LoginPage({ setToken, setCartQuantityProp }: LoginPageProps)
         else
             setMessage("Invalid Login Information")
        
-        console.log("1. LOGIN RETURNED:", token);
+    
     }
    
 

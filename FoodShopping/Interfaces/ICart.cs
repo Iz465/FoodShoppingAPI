@@ -1,4 +1,5 @@
-﻿using FoodShoppingAPI.Enums;
+﻿using FoodShoppingAPI.Dtos.Foods;
+using FoodShoppingAPI.Enums;
 using FoodShoppingAPI_BackEnd.Dtos.CartDtos;
 using FoodShoppingAPI_BackEnd.Models;
 
@@ -8,5 +9,7 @@ namespace FoodShoppingAPI_BackEnd.Interfaces
     {
         Task<ECart> AddFoodToCart(CreateCartDto dto, string? userId);
         Task<int> GetFoodAmount(string? userId);
+
+        Task<List<CartDto>> GetCartList(string? userId);
     }
 }

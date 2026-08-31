@@ -6,8 +6,7 @@ namespace FoodShoppingAPI
     {
 
 
-        // Cart needs its own page showing the food the user has ordered and the total price
-        // cart page needs an option to remove food from users cart
+        // cart page needs an option to remove food from users cart - working on this, needa add the backend controller/service for this.
         // Checkout still needs to happen
 
 

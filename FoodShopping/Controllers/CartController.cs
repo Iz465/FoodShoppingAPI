@@ -48,8 +48,19 @@ namespace FoodShoppingAPI_BackEnd.Controllers
         public async Task<int> GetFoodAmount()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            Console.WriteLine($"User Id is: {userId}");
+          
             return await _cartService.GetFoodAmount(userId);
+
+        }
+
+
+        [Authorize]
+        [HttpGet]
+        public async Task<List<CartDto>> GetCartList()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    
+            return await _cartService.GetCartList(userId);
 
         }
 

@@ -14,6 +14,7 @@ import "./App.css";
 import HomePage from './Pages/HomePage.tsx'
 import AddFoodPage from './Pages/AddFoodPage.tsx'
 import type { Food } from './TypeScripts/Food.ts'
+import CartPage from './Pages/CartPage.tsx'
 
 
 
@@ -34,8 +35,8 @@ function App()
                 </Link>
                 <div>
               
-                <img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/all-3/shopping-cart-9xhllmo2cb79djc9j7b5kb.png/shopping-cart-pe974q2wd8bzu5cueg3qr.png?_a=DATAiZAAZAA0"
-                    className="CartImage" />
+                    <Link to="/CartPage"><img src="https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/all-3/shopping-cart-9xhllmo2cb79djc9j7b5kb.png/shopping-cart-pe974q2wd8bzu5cueg3qr.png?_a=DATAiZAAZAA0"
+                        className="CartImage" /></Link>
                 <p className="CartNumber">{cartQuantity}</p>
                 </div>
             </div>
@@ -51,7 +52,8 @@ function App()
                 <Route path="/Food" element={<FoodPage category={foodCategory} setFoodRequestProp = { setFoodRequest } />} />
                 <Route path="/FoodAdmin" element={<FoodAdminPage token={jwtToken} />} />
                 <Route path="/CategoriesAdmin" element={<CategoryAdminPage token={jwtToken} />} />
-                <Route path="/AddFood" element={<AddFoodPage food={foodRequest} token={jwtToken} setCartQuantityProp={setCartQuantity} /> } />
+                <Route path="/AddFood" element={<AddFoodPage food={foodRequest} token={jwtToken} setCartQuantityProp={setCartQuantity} />} />
+                <Route path="/CartPage" element={<CartPage token={jwtToken} />} />
             
              
             </Routes>

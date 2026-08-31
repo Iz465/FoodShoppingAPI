@@ -15,3 +15,13 @@ export async function getFoodQuantity(token: string | null): Promise<number> {
     return data;
 }
 
+
+export async function removeCartItem(token: string | null, cartId: number): Promise<boolean> {
+
+    const response = await fetch(`http://localhost:5267/api/Cart/${cartId}`, {
+        method: 'PUT',
+        headers: {'Authorization': `Bearer ${token}`}
+    })
+
+    return response.ok;
+}
