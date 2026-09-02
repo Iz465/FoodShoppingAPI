@@ -16,7 +16,7 @@ export async function getFoodQuantity(token: string | null): Promise<number> {
 }
 
 
-export async function removeCartItem(token: string | null, cartId: number): Promise<boolean> {
+export async function updateCartQuantity(token: string | null, cartId: number): Promise<boolean> {
 
     const response = await fetch(`http://localhost:5267/api/Cart/${cartId}`, {
         method: 'PUT',
@@ -25,3 +25,4 @@ export async function removeCartItem(token: string | null, cartId: number): Prom
 
     return response.ok;
 }
+

@@ -64,5 +64,30 @@ namespace FoodShoppingAPI_BackEnd.Controllers
 
         }
 
+        [Authorize]
+        [HttpPut("{id}")]
+
+        public async Task<ActionResult> UpdateCartQuantity(int id)
+        {
+            var result = await _cartService.UpdateCartQuantity(id);
+
+            if (result == ECart.FoodNotFound)
+                return NotFound("Food Not Found");
+
+            return Ok("Cart Updated");
+        }
+
+        [Authorize]
+        [HttpDelete]
+
+        public async Task<ActionResult> CheckoutFood()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return NotFound("Id does not exist");
+
+            await _cartService.CheckoutFood(int.Parse(userId));
+            return Ok();
+        }
     }
 }

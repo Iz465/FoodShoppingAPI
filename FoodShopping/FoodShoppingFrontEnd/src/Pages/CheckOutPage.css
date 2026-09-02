@@ -1,0 +1,25 @@
+﻿
+.OrderDiv{
+    display: flex;
+    justify-content: space-around;
+    width: 70%;
+    margin-left: auto;
+    margin-right:auto;
+    align-items: center;
+  
+}
+
+.OrderButton{
+    padding:10px;
+    background-color:mediumseagreen;
+    border:none;
+    border-radius:5px;
+    color:black;
+    font-size: 25px;
+    font-weight:bold;
+  
+}
+
+.OrderButtonHover:hover {
+    background-color:lightgreen;
+}

@@ -15,6 +15,7 @@ import HomePage from './Pages/HomePage.tsx'
 import AddFoodPage from './Pages/AddFoodPage.tsx'
 import type { Food } from './TypeScripts/Food.ts'
 import CartPage from './Pages/CartPage.tsx'
+import CheckOutPage from './Pages/CheckOutPage.tsx'
 
 
 
@@ -25,6 +26,7 @@ function App()
     const [foodCategory, setFoodCategory] = useState<number | null>(null)
     const [foodRequest, setFoodRequest] = useState<Food | null>(null) 
     const [cartQuantity, setCartQuantity] = useState<number | null>(null)
+    const [totalCartPrice, setTotalCartPrice] = useState<number | null>(null)
 
     return (
       
@@ -53,7 +55,9 @@ function App()
                 <Route path="/FoodAdmin" element={<FoodAdminPage token={jwtToken} />} />
                 <Route path="/CategoriesAdmin" element={<CategoryAdminPage token={jwtToken} />} />
                 <Route path="/AddFood" element={<AddFoodPage food={foodRequest} token={jwtToken} setCartQuantityProp={setCartQuantity} />} />
-                <Route path="/CartPage" element={<CartPage token={jwtToken} />} />
+                <Route path="/CartPage" element={<CartPage token={jwtToken} setCartQuantityProp={setCartQuantity}
+                    totalCartPriceProp={totalCartPrice} setTotalCartPriceProp={setTotalCartPrice} />} />
+                <Route path="/CheckOut" element={<CheckOutPage token={jwtToken} totalCartPriceProp={totalCartPrice } /> } />
             
              
             </Routes>

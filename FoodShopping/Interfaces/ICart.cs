@@ -9,7 +9,8 @@ namespace FoodShoppingAPI_BackEnd.Interfaces
     {
         Task<ECart> AddFoodToCart(CreateCartDto dto, string? userId);
         Task<int> GetFoodAmount(string? userId);
-
         Task<List<CartDto>> GetCartList(string? userId);
+        Task<ECart> UpdateCartQuantity(int id);
+        Task<bool> CheckoutFood(int userId);
     }
 }

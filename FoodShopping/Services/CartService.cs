@@ -102,6 +102,31 @@ namespace FoodShoppingAPI_BackEnd.Services
             return cartDto;
         }
 
+        public async Task<ECart> UpdateCartQuantity(int id)
+        {
+            var cartItem = await _context.Cart.FindAsync(id);
+            if (cartItem == null)
+                return ECart.FoodNotFound;
+
+            if (cartItem.FoodQuantity > 1)
+                cartItem.FoodQuantity--;
+
+            else
+                _context.Cart.Remove(cartItem);
+
+            await _context.SaveChangesAsync();
+
+            return ECart.Success;
+
+        }
+
+        public async Task<bool> CheckoutFood(int userId)
+        {
+            await _context.Cart.Where(cart => cart.UserId == userId).ExecuteDeleteAsync();
+         
+            return true;
+        }
+
     }
 }
 

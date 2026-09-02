@@ -25,4 +25,37 @@
 
 .CartRemoveButton {
     padding: 10px;
+    border-radius: 5px;
+    border:none;
+    background-color: darkred;
+}
+
+.CartRemoveButtonHover:hover
+{
+    background-color: red;
+
+}
+
+.CheckOutButton {
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+    background-color:mediumseagreen;
+    color:black;
+    font-weight:bold;
+}
+
+.CheckOutButtonHover:hover
+{
+    background-color:lightgreen;
+}
+
+
+
+.CheckOutDiv {
+    display:flex;
+    justify-content:space-evenly;
+    padding-bottom: 50px;
+    align-items:center;
 }
