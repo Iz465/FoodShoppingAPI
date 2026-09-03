@@ -14,7 +14,7 @@ function AdminPage()
                     <div className="AdminSections">
           
                  
-                            <h2 className="MarginTop40"><Link to="/Users" className="Link">Users</Link>  </h2>  
+                            <h2 className="MarginTop40"><Link to="/UsersAdmin" className="Link">Users</Link>  </h2>  
                             <h2 className="MarginTop40"> <Link to="/FoodAdmin" className="Link">Food</Link> </h2> 
                             <h2 className="MarginTop40"> <Link to="/CategoriesAdmin" className="Link">Categories</Link> </h2> 
                         </div>

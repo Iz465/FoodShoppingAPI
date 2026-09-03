@@ -7,9 +7,10 @@ import { getFoodQuantity } from '../Services/CartService';
 
 type LoginPageProps = {
     setToken: Dispatch<SetStateAction<string>>
-    setCartQuantityProp: Dispatch<SetStateAction<number | null>>
+    setCartQuantityProp: Dispatch<SetStateAction<number | null>>,
+    setIsLoggedInProp: Dispatch<SetStateAction<boolean>>
 }
-function LoginPage({ setToken, setCartQuantityProp }: LoginPageProps)
+function LoginPage({ setToken, setCartQuantityProp, setIsLoggedInProp }: LoginPageProps)
 {
 
     const [message, setMessage] = useState<string>("")
@@ -34,6 +35,7 @@ function LoginPage({ setToken, setCartQuantityProp }: LoginPageProps)
             setIsLoggingIn(false)
             const foodQuantity = await getFoodQuantity(token)
             setCartQuantityProp(foodQuantity)
+            setIsLoggedInProp(true)
         }
 
         else

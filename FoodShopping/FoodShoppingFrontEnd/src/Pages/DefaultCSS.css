@@ -1,7 +1,7 @@
 ﻿
 .Home {
  display:flex;
- margin:20px;
+
 }
 
 .CartImage {
@@ -14,10 +14,22 @@
 .AppDiv {
     display:flex;
     justify-content:space-between;
-    margin:20px;
+    align-items:center;
+    margin:30px;
+  
 }
 
 .CartNumber{
     color:white;
     font-weight: bold;
+}
+
+.LogOut {
+    font-weight: bold;
+  
+}
+
+.CartandUserContainer {
+    display:flex;
+    
 }

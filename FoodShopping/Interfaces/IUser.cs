@@ -13,8 +13,10 @@ namespace FoodShoppingAPI.Interfaces
         Task<EAuthentication> UpdateUserRole(int id, UpdateUserRoleDto dto);
         Task<string> LoginUser(LoginUserDto dto);
         Task<EAuthentication> DeleteUser(int id);
+        Task<UserDto> CurrentUserProfile(int id);
 
-    
+
+
 
 
     }

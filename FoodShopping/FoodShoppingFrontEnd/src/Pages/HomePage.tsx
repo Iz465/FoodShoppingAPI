@@ -4,12 +4,14 @@ import "./CategoryAdminPage.css";
 import "./DefaultCSS.css";
 
 type HomePageProps = {
-    token: string
+    token: string,
+    isLoggedInProp: boolean
 }
 
-function HomePage({ token }: HomePageProps)
+function HomePage({ token, isLoggedInProp }: HomePageProps)
 { 
     const [isAdmin, setIsAdmin] = useState(true)
+ 
 
     useEffect(() => {
         async function CheckAuthentication() {
@@ -23,6 +25,7 @@ function HomePage({ token }: HomePageProps)
                 setIsAdmin(true);
             else
                 setIsAdmin(false);
+
         }
 
         CheckAuthentication();
@@ -39,11 +42,14 @@ function HomePage({ token }: HomePageProps)
                 <Link to="/Categories" className="Link"><h2>View the Food</h2></Link>
 
 
-
-                <Link to="/Register" className="Link"><h2>Create An Account</h2></Link>
-
-
-                <Link to="/login" className="Link"><h2>Log into Your Account</h2></Link>
+                {!isLoggedInProp && (
+               
+                    <Link to="/Register" className="Link"><h2>Create An Account</h2></Link>
+                )}
+               
+                {!isLoggedInProp && (
+                    <Link to="/login" className="Link"><h2>Log into Your Account</h2></Link> 
+                )}
 
                 {isAdmin && (
                     <Link to="/Admin" className="Link"><h2>Admin</h2></Link>

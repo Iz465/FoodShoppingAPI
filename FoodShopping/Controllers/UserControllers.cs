@@ -47,6 +47,19 @@ namespace FoodShoppingAPI.Controllers
             return Ok(user);
         }
 
+        [Authorize]
+        [HttpGet("profile")]
+        public async Task<ActionResult<UserDto>> CurrentUserProfile()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+                return NotFound("User Not Found");
+
+            UserDto user = await _userService.CurrentUserProfile(int.Parse(userId));
+
+            return Ok(user);
+        }
+
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto dto)
         {
@@ -71,16 +84,15 @@ namespace FoodShoppingAPI.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(int id, UpdateUserDto dto)
+        [HttpPut("profile")]
+        public async Task<ActionResult> UpdateUser(UpdateUserDto dto)
         {
+            
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+                return NotFound("User Not Found");
 
-            string? currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (currentUserId != id.ToString())
-                return StatusCode(StatusCodes.Status403Forbidden,"Can only edit your own profile");
-
-            EAuthentication authentication = await _userService.UpdateUser(id, dto);
+            EAuthentication authentication = await _userService.UpdateUser(int.Parse(userId), dto);
 
             switch (authentication)
             {

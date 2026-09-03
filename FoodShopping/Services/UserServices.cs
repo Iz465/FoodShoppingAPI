@@ -61,6 +61,7 @@ namespace FoodShoppingAPI.Services
                 return EAuthentication.UserNotFound;
 
 
+
             if (!string.IsNullOrWhiteSpace(dto.OldPassword)) // must put in old password to verify its your account
             {
                 var passwordMatches = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.OldPassword);
@@ -75,15 +76,11 @@ namespace FoodShoppingAPI.Services
                     user.PasswordHash = _passwordHasher.HashPassword(user, dto.NewPassword);
                 }
 
-                if (!string.IsNullOrWhiteSpace(dto.Username))
-                    user.Username = dto.Username;
-
             }
 
-            else
-                return EAuthentication.PasswordNotFound;
+            if (!string.IsNullOrWhiteSpace(dto.Username))
+                user.Username = dto.Username;
 
-         
 
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
@@ -186,6 +183,24 @@ namespace FoodShoppingAPI.Services
             return EAuthentication.Success;
         }
 
- 
+        public async Task<UserDto> CurrentUserProfile(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return null!;
+
+            UserDto dto = new UserDto
+            {
+                Username = user.Username,
+                UserRole = user.RoleEnum.ToString()
+            };
+
+            Console.WriteLine(user.RoleEnum.ToString());
+
+            return dto;
+        }
+
+
+
     }
 }

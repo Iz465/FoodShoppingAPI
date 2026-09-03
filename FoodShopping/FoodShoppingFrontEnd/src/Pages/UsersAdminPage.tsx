@@ -7,7 +7,7 @@ type UserPageProps = {
     token: string
 }
 
-function UserPage({ token }: UserPageProps) {  
+function UsersAdminPage({ token }: UserPageProps) {  
 
     const [users, setUsers] = useState<User[]>([])
     const [user, setUser] = useState<User | null>(null)
@@ -152,4 +152,4 @@ function UserPage({ token }: UserPageProps) {
     )
 }
 
-export default UserPage
+export default UsersAdminPage

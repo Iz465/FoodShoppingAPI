@@ -77,3 +77,20 @@ export async function editUserRoleRequest(token: string, user: User, userRole: n
 
     return response.ok
 }
+
+
+export async function editUserProfile(token: string, username?: string | null): Promise<boolean>
+{
+    const response = await fetch('http://localhost:5267/api/users/profile', {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'Application/json'
+        },
+        body: JSON.stringify({
+            'username': username
+        })
+    })
+
+    return response.ok
+}
